@@ -46,6 +46,8 @@ public class BreakableSpawnScript : MonoBehaviour
             if (FractalLevel1 < 3)
             {
                 FractalLevel1++;
+
+                logic.setDegree(FractalLevel1);
             }
 
             randomizer = new System.Random().Next(0, 5);

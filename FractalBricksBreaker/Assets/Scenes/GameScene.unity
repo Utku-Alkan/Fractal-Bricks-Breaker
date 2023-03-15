@@ -599,8 +599,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -219, y: 626}
-  m_SizeDelta: {x: 300, y: 100}
+  m_AnchoredPosition: {x: -283, y: 641}
+  m_SizeDelta: {x: 211, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1254973348
 CanvasRenderer:
@@ -1063,7 +1063,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballCount: {fileID: 2058859902}
   score: {fileID: 1254973349}
-  highScore: {fileID: 2026675379}
+  degree: {fileID: 2026675379}
 --- !u!4 &1851024256
 Transform:
   m_ObjectHideFlags: 0
@@ -1091,7 +1091,7 @@ GameObject:
   - component: {fileID: 2026675380}
   - component: {fileID: 2026675379}
   m_Layer: 5
-  m_Name: Highscore
+  m_Name: Degree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1130,7 +1130,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0
+  m_Text: 'Degree:  0'
 --- !u!222 &2026675380
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1156,7 +1156,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 219, y: 626}
+  m_AnchoredPosition: {x: 237, y: 641}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2058859901

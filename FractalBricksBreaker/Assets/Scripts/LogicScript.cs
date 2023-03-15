@@ -7,7 +7,7 @@ public class LogicScript : MonoBehaviour
 {
     [SerializeField] Text ballCount;
     [SerializeField] Text score;
-    [SerializeField] Text highScore;
+    [SerializeField] Text degree;
 
     // Start is called before the first frame update
     void Start()
@@ -49,8 +49,8 @@ public class LogicScript : MonoBehaviour
         score.text = temp.ToString();
     }
 
-    public void setHighscore(int a)
+    public void setDegree(int a)
     {
-        highScore.text = a.ToString();
+        degree.text = "Degree: " + a.ToString();
     }
 }
