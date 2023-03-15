@@ -781,8 +781,11 @@ MonoBehaviour:
   Breakable3: {fileID: 5154414400346889128, guid: 50d8e86dc58a1bd4ea4a0f924c38729e, type: 3}
   Breakable4: {fileID: 1000012490942172, guid: 12ed2799b098648e9bceac3e017e79d2, type: 3}
   Collectable: {fileID: 2575205864826508752, guid: cbc74c12dc132354a809306d986ed343, type: 3}
-  FractalLevel1: 0
-  collectableOffsetY: 0.4
+  Collectable2: {fileID: 2575205864826508752, guid: a6e4f02cfcd57214b8267c6d99696ff0, type: 3}
+  Collectable3: {fileID: 2575205864826508752, guid: 7761fd4f704b67844bd1f44109ae0d50, type: 3}
+  FractalLevel1: 1
+  collectableOffsetY: 0.2
+  collectableOffsetX: 0.2
   logic: {fileID: 0}
 --- !u!4 &1540516710
 Transform:
@@ -1210,7 +1213,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 100
+  m_Text: 3
 --- !u!222 &2058859903
 CanvasRenderer:
   m_ObjectHideFlags: 0
