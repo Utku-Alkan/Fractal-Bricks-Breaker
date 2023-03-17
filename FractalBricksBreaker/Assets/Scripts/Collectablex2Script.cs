@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Collectablex2Script : MonoBehaviour
 {
-    [SerializeField] GameObject ball;
     [SerializeField] int ballSpeed;
     private Vector3 direction1;
     private Vector3 direction2;
@@ -25,12 +24,12 @@ public class Collectablex2Script : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameObject newBall1 = Instantiate(ball, new Vector3(transform.position.x, transform.position.y, 0), transform.rotation);
+        GameObject newBall1 = Instantiate(collision.gameObject, new Vector3(transform.position.x, transform.position.y, 0), transform.rotation);
         Rigidbody2D rb1 = newBall1.GetComponent<Rigidbody2D>();
         Vector3 force1 = direction1.normalized * ballSpeed;
         rb1.AddForce(force1);
 
-        GameObject newBall2 = Instantiate(ball, new Vector3(transform.position.x, transform.position.y, 0), transform.rotation);
+        GameObject newBall2 = Instantiate(collision.gameObject, new Vector3(transform.position.x, transform.position.y, 0), transform.rotation);
         Rigidbody2D rb2 = newBall2.GetComponent<Rigidbody2D>();
         Vector3 force2 = direction2.normalized * ballSpeed;
         rb2.AddForce(force2);

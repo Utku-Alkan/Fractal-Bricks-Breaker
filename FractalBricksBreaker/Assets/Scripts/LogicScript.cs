@@ -8,6 +8,8 @@ public class LogicScript : MonoBehaviour
     [SerializeField] Text ballCount;
     [SerializeField] Text score;
     [SerializeField] Text degree;
+    [SerializeField] Text fractalName;
+
 
     // Start is called before the first frame update
     void Start()
@@ -52,5 +54,10 @@ public class LogicScript : MonoBehaviour
     public void setDegree(int a)
     {
         degree.text = "Degree: " + a.ToString();
+    }
+
+    public void setFractalName(string name)
+    {
+        fractalName.text = name;
     }
 }

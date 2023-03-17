@@ -49,27 +49,56 @@ public class BreakableSpawnScript : MonoBehaviour
 
         if (GameObject.FindGameObjectsWithTag("Breakable").Length <= 0)
         {
-            if (FractalLevel1 < 3)
+            levelCounter++;
+            if (FractalLevel1 < 3 && levelCounter > 1)
             {
+                levelCounter = 0;
                 FractalLevel1++;
 
                 logic.setDegree(FractalLevel1);
             }
 
-            randomizer = new System.Random().Next(0, 5);
+            randomizer = new System.Random().Next(0, 8);
+
             Debug.Log(randomizer);
+
             if (randomizer == 4) //triangle
             {
+                logic.setFractalName("Sierpinski Triangle (original)");
                 randomizer = 3;
                 temp = Instantiate(centerBreakables[randomizer]);
                 temp.transform.localScale = temp.transform.localScale * 1.6f;
                 CenterBreakable = Instantiate(temp, new Vector3(0, transform.position.y, 0), temp.transform.rotation);
 
-                spawnAroundTriangle(CenterBreakable, FractalLevel1+1);
+                spawnAroundTriangle(CenterBreakable, FractalLevel1+1, true);
+                Destroy(temp);
+
+            }else if (randomizer > 4 && randomizer <= 7)
+            {
+
+                randomizer = randomizer - 5;
+
+                logic.setFractalName("Sierpinski Triangle with " + centerBreakables[randomizer].name);
+
+                temp = Instantiate(centerBreakables[randomizer]);
+                temp.transform.localScale = temp.transform.localScale * 1.6f;
+                CenterBreakable = Instantiate(temp, new Vector3(0, transform.position.y, 0), temp.transform.rotation);
+
+                spawnAroundTriangle(CenterBreakable, FractalLevel1 + 1, false);
                 Destroy(temp);
             }
-            else // 0 -> square, 1 -> circle, 2 -> triangle
+            else // 0 -> square, 1 -> circle, 2 -> hexagon, 3 -> triangle
             { 
+                if(randomizer == 0)
+                {
+                    logic.setFractalName("Sierpinski Carpet (original)");
+
+                }
+                else
+                {
+                    logic.setFractalName("Sierpinski Carpet with " + centerBreakables[randomizer].name);
+
+                }
                 CenterBreakable = Instantiate(centerBreakables[randomizer], new Vector3(0, transform.position.y, 0), centerBreakables[randomizer].transform.rotation);
                 spawnAround(CenterBreakable, FractalLevel1);
             }
@@ -169,7 +198,7 @@ public class BreakableSpawnScript : MonoBehaviour
 
 
 
-    void spawnAroundTriangle(GameObject breakableObject, int maxDepth)
+    void spawnAroundTriangle(GameObject breakableObject, int maxDepth, bool isTriangle)
     {
         if (maxDepth <= 0)
         {
@@ -182,10 +211,24 @@ public class BreakableSpawnScript : MonoBehaviour
 
         smallBreakableObject.transform.localScale = smallScale;
 
-        GameObject around1 = Instantiate(smallBreakableObject, new Vector3(breakableObject.transform.position.x, breakableObject.transform.position.y + (1.5f * smallBreakableObject.transform.localScale.y), 0), smallBreakableObject.transform.rotation);
-        GameObject around2 = Instantiate(smallBreakableObject, new Vector3(breakableObject.transform.position.x + smallBreakableObject.transform.localScale.x, breakableObject.transform.position.y - (0.5f * smallBreakableObject.transform.localScale.y), 0), smallBreakableObject.transform.rotation);
-        GameObject around3 = Instantiate(smallBreakableObject, new Vector3(breakableObject.transform.position.x - smallBreakableObject.transform.localScale.x, breakableObject.transform.position.y - (0.5f * smallBreakableObject.transform.localScale.y), 0), smallBreakableObject.transform.rotation);
-        
+        GameObject around1 = new GameObject();
+        GameObject around2 = new GameObject();
+        GameObject around3 = new GameObject();
+        if (isTriangle)
+        {
+            around1 = Instantiate(smallBreakableObject, new Vector3(breakableObject.transform.position.x, breakableObject.transform.position.y + (1.5f * smallBreakableObject.transform.localScale.y), 0), smallBreakableObject.transform.rotation);
+            around2 = Instantiate(smallBreakableObject, new Vector3(breakableObject.transform.position.x + smallBreakableObject.transform.localScale.x, breakableObject.transform.position.y - (0.5f * smallBreakableObject.transform.localScale.y), 0), smallBreakableObject.transform.rotation);
+            around3 = Instantiate(smallBreakableObject, new Vector3(breakableObject.transform.position.x - smallBreakableObject.transform.localScale.x, breakableObject.transform.position.y - (0.5f * smallBreakableObject.transform.localScale.y), 0), smallBreakableObject.transform.rotation);
+
+        }
+        else
+        {
+            around1 = Instantiate(smallBreakableObject, new Vector3(breakableObject.transform.position.x, breakableObject.transform.position.y + (1.5f * smallBreakableObject.transform.localScale.y), 0), smallBreakableObject.transform.rotation);
+            around2 = Instantiate(smallBreakableObject, new Vector3(breakableObject.transform.position.x + smallBreakableObject.transform.localScale.x, breakableObject.transform.position.y - (0.5f * smallBreakableObject.transform.localScale.y), 0), smallBreakableObject.transform.rotation);
+            around3 = Instantiate(smallBreakableObject, new Vector3(breakableObject.transform.position.x - smallBreakableObject.transform.localScale.x, breakableObject.transform.position.y - (0.5f * smallBreakableObject.transform.localScale.y), 0), smallBreakableObject.transform.rotation);
+
+        }
+
 
         if (maxDepth > 1)
         {
@@ -210,9 +253,9 @@ public class BreakableSpawnScript : MonoBehaviour
         Destroy(smallBreakableObject);
 
         // Call spawnAround for each around object, with maxDepth decreased by 1
-        spawnAroundTriangle(around1, maxDepth - 1);
-        spawnAroundTriangle(around2, maxDepth - 1);
-        spawnAroundTriangle(around3, maxDepth - 1);
+        spawnAroundTriangle(around1, maxDepth - 1, isTriangle);
+        spawnAroundTriangle(around2, maxDepth - 1, isTriangle);
+        spawnAroundTriangle(around3, maxDepth - 1, isTriangle);
 
     }
 }
