@@ -5,10 +5,11 @@ using UnityEngine;
 public class BreakableSpawnScript : MonoBehaviour
 {
 
-    [SerializeField] GameObject Breakable1;
-    [SerializeField] GameObject Breakable2;
-    [SerializeField] GameObject Breakable3;
-    [SerializeField] GameObject Breakable4;
+    [SerializeField] GameObject Breakable1; // square
+    [SerializeField] GameObject Breakable2; // circle
+    [SerializeField] GameObject Breakable3; // hexagon
+    [SerializeField] GameObject Breakable4; // triangle   
+    [SerializeField] GameObject Breakable5; // line
 
 
     [SerializeField] GameObject Collectable;
@@ -39,7 +40,7 @@ public class BreakableSpawnScript : MonoBehaviour
         centerBreakables.Add(Breakable2);
         centerBreakables.Add(Breakable3);
         centerBreakables.Add(Breakable4);
-
+        centerBreakables.Add(Breakable5);
 
     }
 
@@ -58,11 +59,37 @@ public class BreakableSpawnScript : MonoBehaviour
                 logic.setDegree(FractalLevel1);
             }
 
-            randomizer = new System.Random().Next(0, 8);
+            randomizer = new System.Random().Next(0, 9);
 
             Debug.Log(randomizer);
+            if (randomizer == 8) // line
+            {
+                logic.setFractalName("Cantor Set (original)");
+                randomizer = 4;
+                temp = Instantiate(centerBreakables[randomizer]);
+                //temp.transform.localScale = temp.transform.localScale * 1.6f;
+                CenterBreakable = Instantiate(temp, new Vector3(0, transform.position.y, 0), temp.transform.rotation);
 
-            if (randomizer == 4) //triangle
+                cantorSet(CenterBreakable, FractalLevel1 + 1, true);
+                Destroy(temp);
+            }
+            else if (randomizer > 8 && randomizer <= 12)
+            {
+                randomizer = randomizer - 9;
+                if(randomizer == 1) // deleting circle since it looks disgusting
+                {
+                    randomizer = 0; 
+                }
+                logic.setFractalName("Cantor Set with " + centerBreakables[randomizer].name);
+                temp = Instantiate(centerBreakables[randomizer]);
+                temp.transform.localScale = new Vector3(temp.transform.localScale.x * 2, temp.transform.localScale.y, temp.transform.localScale.z);
+                CenterBreakable = Instantiate(temp, new Vector3(0, transform.position.y, 0), temp.transform.rotation);
+
+                cantorSet(CenterBreakable, FractalLevel1 + 1, true);
+                Destroy(temp);
+
+            }
+            else if (randomizer == 4) //triangle
             {
                 logic.setFractalName("Sierpinski Triangle (original)");
                 randomizer = 3;
@@ -70,10 +97,11 @@ public class BreakableSpawnScript : MonoBehaviour
                 temp.transform.localScale = temp.transform.localScale * 1.6f;
                 CenterBreakable = Instantiate(temp, new Vector3(0, transform.position.y, 0), temp.transform.rotation);
 
-                spawnAroundTriangle(CenterBreakable, FractalLevel1+1, true);
+                spawnAroundTriangle(CenterBreakable, FractalLevel1 + 1, true);
                 Destroy(temp);
 
-            }else if (randomizer > 4 && randomizer <= 7)
+            }
+            else if (randomizer > 4 && randomizer <= 7)
             {
 
                 randomizer = randomizer - 5;
@@ -88,8 +116,8 @@ public class BreakableSpawnScript : MonoBehaviour
                 Destroy(temp);
             }
             else // 0 -> square, 1 -> circle, 2 -> hexagon, 3 -> triangle
-            { 
-                if(randomizer == 0)
+            {
+                if (randomizer == 0)
                 {
                     logic.setFractalName("Sierpinski Carpet (original)");
 
@@ -211,23 +239,15 @@ public class BreakableSpawnScript : MonoBehaviour
 
         smallBreakableObject.transform.localScale = smallScale;
 
-        GameObject around1 = new GameObject();
-        GameObject around2 = new GameObject();
-        GameObject around3 = new GameObject();
-        if (isTriangle)
-        {
-            around1 = Instantiate(smallBreakableObject, new Vector3(breakableObject.transform.position.x, breakableObject.transform.position.y + (1.5f * smallBreakableObject.transform.localScale.y), 0), smallBreakableObject.transform.rotation);
-            around2 = Instantiate(smallBreakableObject, new Vector3(breakableObject.transform.position.x + smallBreakableObject.transform.localScale.x, breakableObject.transform.position.y - (0.5f * smallBreakableObject.transform.localScale.y), 0), smallBreakableObject.transform.rotation);
-            around3 = Instantiate(smallBreakableObject, new Vector3(breakableObject.transform.position.x - smallBreakableObject.transform.localScale.x, breakableObject.transform.position.y - (0.5f * smallBreakableObject.transform.localScale.y), 0), smallBreakableObject.transform.rotation);
+        //GameObject around1 = new GameObject();
+        //GameObject around2 = new GameObject();
+        //GameObject around3 = new GameObject();
 
-        }
-        else
-        {
-            around1 = Instantiate(smallBreakableObject, new Vector3(breakableObject.transform.position.x, breakableObject.transform.position.y + (1.5f * smallBreakableObject.transform.localScale.y), 0), smallBreakableObject.transform.rotation);
-            around2 = Instantiate(smallBreakableObject, new Vector3(breakableObject.transform.position.x + smallBreakableObject.transform.localScale.x, breakableObject.transform.position.y - (0.5f * smallBreakableObject.transform.localScale.y), 0), smallBreakableObject.transform.rotation);
-            around3 = Instantiate(smallBreakableObject, new Vector3(breakableObject.transform.position.x - smallBreakableObject.transform.localScale.x, breakableObject.transform.position.y - (0.5f * smallBreakableObject.transform.localScale.y), 0), smallBreakableObject.transform.rotation);
+        GameObject around1 = Instantiate(smallBreakableObject, new Vector3(breakableObject.transform.position.x, breakableObject.transform.position.y + (1.5f * smallBreakableObject.transform.localScale.y), 0), smallBreakableObject.transform.rotation);
+        GameObject around2 = Instantiate(smallBreakableObject, new Vector3(breakableObject.transform.position.x + smallBreakableObject.transform.localScale.x, breakableObject.transform.position.y - (0.5f * smallBreakableObject.transform.localScale.y), 0), smallBreakableObject.transform.rotation);
+        GameObject around3 = Instantiate(smallBreakableObject, new Vector3(breakableObject.transform.position.x - smallBreakableObject.transform.localScale.x, breakableObject.transform.position.y - (0.5f * smallBreakableObject.transform.localScale.y), 0), smallBreakableObject.transform.rotation);
 
-        }
+
 
 
         if (maxDepth > 1)
@@ -256,6 +276,55 @@ public class BreakableSpawnScript : MonoBehaviour
         spawnAroundTriangle(around1, maxDepth - 1, isTriangle);
         spawnAroundTriangle(around2, maxDepth - 1, isTriangle);
         spawnAroundTriangle(around3, maxDepth - 1, isTriangle);
+
+    }
+
+
+
+    void cantorSet(GameObject breakableObject, int maxDepth, bool isLine)
+    {
+        float distanceY = 0.8f;
+
+        if (maxDepth <= 0)
+        {
+            return;
+        }
+
+
+        GameObject smallBreakableObject = Instantiate(breakableObject);
+
+        Vector3 smallScale = new Vector3(smallBreakableObject.transform.localScale.x / 3, smallBreakableObject.transform.localScale.y, smallBreakableObject.transform.localScale.z);
+
+        smallBreakableObject.transform.localScale = smallScale;
+
+        GameObject around1 = new GameObject();
+        GameObject around2 = new GameObject();
+        
+        if (isLine)
+        {
+            around1 = Instantiate(smallBreakableObject, new Vector3(breakableObject.transform.position.x - smallBreakableObject.transform.localScale.x, breakableObject.transform.position.y + distanceY, 0), smallBreakableObject.transform.rotation);
+            around2 = Instantiate(smallBreakableObject, new Vector3(breakableObject.transform.position.x + smallBreakableObject.transform.localScale.x, breakableObject.transform.position.y + distanceY, 0), smallBreakableObject.transform.rotation);
+
+        }
+        else
+        {
+
+        }
+
+
+        if (maxDepth > 1)
+        {
+
+            Instantiate(Collectable, new Vector3(breakableObject.transform.position.x - smallBreakableObject.transform.localScale.x, breakableObject.transform.position.y + distanceY, 0), transform.rotation);
+            Instantiate(Collectable, new Vector3(breakableObject.transform.position.x + smallBreakableObject.transform.localScale.x, breakableObject.transform.position.y + distanceY, 0), transform.rotation);
+
+        }
+
+
+        Destroy(smallBreakableObject);
+
+        cantorSet(around1, maxDepth-1, isLine);
+        cantorSet(around2, maxDepth-1, isLine);
 
     }
 }
