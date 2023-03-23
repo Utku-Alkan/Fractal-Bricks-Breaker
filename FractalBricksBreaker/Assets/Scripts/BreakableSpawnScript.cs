@@ -15,6 +15,7 @@ public class BreakableSpawnScript : MonoBehaviour
     [SerializeField] GameObject Collectable;
     [SerializeField] GameObject Collectable2;
     [SerializeField] GameObject Collectable3;
+    [SerializeField] GameObject Coin;
 
 
 
@@ -51,17 +52,23 @@ public class BreakableSpawnScript : MonoBehaviour
         if (GameObject.FindGameObjectsWithTag("Breakable").Length <= 0)
         {
             levelCounter++;
-            if (FractalLevel1 < 3 && levelCounter > 1)
+            logic.setLevel(levelCounter);
+            if (FractalLevel1 < 3 && (levelCounter % 2 == 0))
             {
-                levelCounter = 0;
                 FractalLevel1++;
 
                 logic.setDegree(FractalLevel1);
+            }else if (levelCounter % 5 == 0)
+            {
+                Debug.Log("Special level");
             }
 
             randomizer = new System.Random().Next(0, 9);
 
             Debug.Log(randomizer);
+
+            Instantiate(Coin, new Vector3(0, transform.position.y, 0), transform.rotation); //coin init
+
             if (randomizer == 8) // line
             {
                 logic.setFractalName("Cantor Set (original)");
@@ -134,6 +141,8 @@ public class BreakableSpawnScript : MonoBehaviour
 
 
             //destroy all balls after completing the fractal
+
+
             GameObject[] balls = GameObject.FindGameObjectsWithTag("Ball");
 
             foreach (GameObject ball in balls)
@@ -141,7 +150,30 @@ public class BreakableSpawnScript : MonoBehaviour
                 Destroy(ball);
             }
 
-            levelCounter++;
+
+        }
+        else if (GameObject.FindGameObjectsWithTag("Ball").Length <= 0 && logic.returnBallCount() == 0 && !logic.isPanelActive()) // game over
+        {
+
+            logic.panelSetActive();
+            if(PlayerPrefs.GetInt("Highscore") < levelCounter)
+            {
+                
+                PlayerPrefs.SetInt("Highscore", levelCounter);
+                logic.setNewHighscoreText("NEW HIGHSCORE!!!");
+            }
+            else
+            {
+
+                logic.setNewHighscoreText("Game Over");
+            }
+
+            logic.setScoreEnd("Your Score: " + levelCounter.ToString());
+            
+            logic.setHighscore(PlayerPrefs.GetInt("Highscore"));
+
+
+            //logic.goMainMenuScene();
         }
     }
 
@@ -170,43 +202,14 @@ public class BreakableSpawnScript : MonoBehaviour
         if(maxDepth > 1)
         {
 
-            Instantiate(Collectable3, new Vector3(-collectableOffsetX + smallBreakableObject.transform.position.x - breakableObject.transform.localScale.x, smallBreakableObject.transform.position.y - breakableObject.transform.localScale.x, 0), transform.rotation);
-            Instantiate(Collectable3, new Vector3(-collectableOffsetX + smallBreakableObject.transform.position.x, smallBreakableObject.transform.position.y - breakableObject.transform.localScale.x, 0), transform.rotation);
-            Instantiate(Collectable3, new Vector3(-collectableOffsetX + smallBreakableObject.transform.position.x + breakableObject.transform.localScale.x, smallBreakableObject.transform.position.y - breakableObject.transform.localScale.x, 0), transform.rotation);
-            Instantiate(Collectable3, new Vector3(-collectableOffsetX + smallBreakableObject.transform.position.x - breakableObject.transform.localScale.x, smallBreakableObject.transform.position.y, 0), transform.rotation);
-            Instantiate(Collectable3, new Vector3(-collectableOffsetX + smallBreakableObject.transform.position.x + breakableObject.transform.localScale.x, smallBreakableObject.transform.position.y, 0), transform.rotation);
-            Instantiate(Collectable3, new Vector3(-collectableOffsetX + smallBreakableObject.transform.position.x - breakableObject.transform.localScale.x, smallBreakableObject.transform.position.y + breakableObject.transform.localScale.x, 0), transform.rotation);
-            Instantiate(Collectable3, new Vector3(-collectableOffsetX + smallBreakableObject.transform.position.x, smallBreakableObject.transform.position.y + breakableObject.transform.localScale.x, 0), transform.rotation);
-            Instantiate(Collectable3, new Vector3(-collectableOffsetX + smallBreakableObject.transform.position.x + breakableObject.transform.localScale.x, smallBreakableObject.transform.position.y + breakableObject.transform.localScale.x, 0), transform.rotation);
-
-
-            Instantiate(Collectable2, new Vector3(collectableOffsetX+smallBreakableObject.transform.position.x - breakableObject.transform.localScale.x,  smallBreakableObject.transform.position.y - breakableObject.transform.localScale.x, 0), transform.rotation);
-            Instantiate(Collectable2, new Vector3(collectableOffsetX + smallBreakableObject.transform.position.x, smallBreakableObject.transform.position.y - breakableObject.transform.localScale.x, 0), transform.rotation);
-            Instantiate(Collectable2, new Vector3(collectableOffsetX + smallBreakableObject.transform.position.x + breakableObject.transform.localScale.x, smallBreakableObject.transform.position.y - breakableObject.transform.localScale.x, 0), transform.rotation);
-            Instantiate(Collectable2, new Vector3(collectableOffsetX + smallBreakableObject.transform.position.x - breakableObject.transform.localScale.x, smallBreakableObject.transform.position.y, 0), transform.rotation);
-            Instantiate(Collectable2, new Vector3(collectableOffsetX + smallBreakableObject.transform.position.x + breakableObject.transform.localScale.x, smallBreakableObject.transform.position.y, 0), transform.rotation);
-            Instantiate(Collectable2, new Vector3(collectableOffsetX + smallBreakableObject.transform.position.x - breakableObject.transform.localScale.x, smallBreakableObject.transform.position.y + breakableObject.transform.localScale.x, 0), transform.rotation);
-            Instantiate(Collectable2, new Vector3(collectableOffsetX + smallBreakableObject.transform.position.x, smallBreakableObject.transform.position.y + breakableObject.transform.localScale.x, 0), transform.rotation);
-            Instantiate(Collectable2, new Vector3(collectableOffsetX + smallBreakableObject.transform.position.x + breakableObject.transform.localScale.x, smallBreakableObject.transform.position.y + breakableObject.transform.localScale.x, 0), transform.rotation);
-
-            Instantiate(Collectable, new Vector3(smallBreakableObject.transform.position.x - breakableObject.transform.localScale.x, -collectableOffsetY + smallBreakableObject.transform.position.y - breakableObject.transform.localScale.x, 0), transform.rotation);
-            Instantiate(Collectable, new Vector3(smallBreakableObject.transform.position.x, -collectableOffsetY + smallBreakableObject.transform.position.y - breakableObject.transform.localScale.x, 0), transform.rotation);
-            Instantiate(Collectable, new Vector3(smallBreakableObject.transform.position.x + breakableObject.transform.localScale.x, -collectableOffsetY + smallBreakableObject.transform.position.y - breakableObject.transform.localScale.x, 0), transform.rotation);
-            Instantiate(Collectable, new Vector3(smallBreakableObject.transform.position.x - breakableObject.transform.localScale.x, -collectableOffsetY + smallBreakableObject.transform.position.y, 0), transform.rotation);
-            Instantiate(Collectable, new Vector3(smallBreakableObject.transform.position.x + breakableObject.transform.localScale.x, -collectableOffsetY + smallBreakableObject.transform.position.y, 0), transform.rotation);
-            Instantiate(Collectable, new Vector3(smallBreakableObject.transform.position.x - breakableObject.transform.localScale.x, -collectableOffsetY + smallBreakableObject.transform.position.y + breakableObject.transform.localScale.x, 0), transform.rotation);
-            Instantiate(Collectable, new Vector3(smallBreakableObject.transform.position.x, -collectableOffsetY + smallBreakableObject.transform.position.y + breakableObject.transform.localScale.x, 0), transform.rotation);
-            Instantiate(Collectable, new Vector3(smallBreakableObject.transform.position.x + breakableObject.transform.localScale.x, -collectableOffsetY + smallBreakableObject.transform.position.y + breakableObject.transform.localScale.x, 0), transform.rotation);
-
-
-            Instantiate(Collectable, new Vector3(smallBreakableObject.transform.position.x - breakableObject.transform.localScale.x, collectableOffsetY + smallBreakableObject.transform.position.y - breakableObject.transform.localScale.x, 0), transform.rotation);
-            Instantiate(Collectable, new Vector3(smallBreakableObject.transform.position.x, collectableOffsetY + smallBreakableObject.transform.position.y - breakableObject.transform.localScale.x, 0), transform.rotation);
-            Instantiate(Collectable, new Vector3(smallBreakableObject.transform.position.x + breakableObject.transform.localScale.x, collectableOffsetY + smallBreakableObject.transform.position.y - breakableObject.transform.localScale.x, 0), transform.rotation);
-            Instantiate(Collectable, new Vector3(smallBreakableObject.transform.position.x - breakableObject.transform.localScale.x, collectableOffsetY + smallBreakableObject.transform.position.y, 0), transform.rotation);
-            Instantiate(Collectable, new Vector3(smallBreakableObject.transform.position.x + breakableObject.transform.localScale.x, collectableOffsetY + smallBreakableObject.transform.position.y, 0), transform.rotation);
-            Instantiate(Collectable, new Vector3(smallBreakableObject.transform.position.x - breakableObject.transform.localScale.x, collectableOffsetY + smallBreakableObject.transform.position.y + breakableObject.transform.localScale.x, 0), transform.rotation);
-            Instantiate(Collectable, new Vector3(smallBreakableObject.transform.position.x, collectableOffsetY + smallBreakableObject.transform.position.y + breakableObject.transform.localScale.x, 0), transform.rotation);
-            Instantiate(Collectable, new Vector3(smallBreakableObject.transform.position.x + breakableObject.transform.localScale.x, collectableOffsetY + smallBreakableObject.transform.position.y + breakableObject.transform.localScale.x, 0), transform.rotation);
+            Instantiate(Collectable, new Vector3(smallBreakableObject.transform.position.x - breakableObject.transform.localScale.x, smallBreakableObject.transform.position.y - breakableObject.transform.localScale.x, 0), transform.rotation);
+            Instantiate(Collectable, new Vector3(smallBreakableObject.transform.position.x, smallBreakableObject.transform.position.y - breakableObject.transform.localScale.x, 0), transform.rotation);
+            Instantiate(Collectable, new Vector3(smallBreakableObject.transform.position.x + breakableObject.transform.localScale.x, smallBreakableObject.transform.position.y - breakableObject.transform.localScale.x, 0), transform.rotation);
+            Instantiate(Collectable, new Vector3(smallBreakableObject.transform.position.x - breakableObject.transform.localScale.x, smallBreakableObject.transform.position.y, 0), transform.rotation);
+            Instantiate(Collectable, new Vector3(smallBreakableObject.transform.position.x + breakableObject.transform.localScale.x, smallBreakableObject.transform.position.y, 0), transform.rotation);
+            Instantiate(Collectable, new Vector3(smallBreakableObject.transform.position.x - breakableObject.transform.localScale.x, smallBreakableObject.transform.position.y + breakableObject.transform.localScale.x, 0), transform.rotation);
+            Instantiate(Collectable, new Vector3(smallBreakableObject.transform.position.x, smallBreakableObject.transform.position.y + breakableObject.transform.localScale.x, 0), transform.rotation);
+            Instantiate(Collectable, new Vector3(smallBreakableObject.transform.position.x + breakableObject.transform.localScale.x, smallBreakableObject.transform.position.y + breakableObject.transform.localScale.x, 0), transform.rotation);
 
         }
 
@@ -253,18 +256,10 @@ public class BreakableSpawnScript : MonoBehaviour
         if (maxDepth > 1)
         {
 
-            Instantiate(Collectable3, new Vector3(-collectableOffsetX + breakableObject.transform.position.x, breakableObject.transform.position.y + (1.5f * smallBreakableObject.transform.localScale.y), 0), transform.rotation);
-            Instantiate(Collectable3, new Vector3(-collectableOffsetX + breakableObject.transform.position.x + smallBreakableObject.transform.localScale.x, breakableObject.transform.position.y - (0.5f * smallBreakableObject.transform.localScale.y), 0), transform.rotation);
-            Instantiate(Collectable3, new Vector3(-collectableOffsetX + breakableObject.transform.position.x - smallBreakableObject.transform.localScale.x, breakableObject.transform.position.y - (0.5f * smallBreakableObject.transform.localScale.y), 0), transform.rotation);
 
-
-            Instantiate(Collectable2, new Vector3(collectableOffsetX + breakableObject.transform.position.x, breakableObject.transform.position.y + (1.5f * smallBreakableObject.transform.localScale.y), 0), transform.rotation);
-            Instantiate(Collectable2, new Vector3(collectableOffsetX + breakableObject.transform.position.x + smallBreakableObject.transform.localScale.x, breakableObject.transform.position.y - (0.5f * smallBreakableObject.transform.localScale.y), 0), transform.rotation);
-            Instantiate(Collectable2, new Vector3(collectableOffsetX + breakableObject.transform.position.x - smallBreakableObject.transform.localScale.x, breakableObject.transform.position.y - (0.5f * smallBreakableObject.transform.localScale.y), 0), transform.rotation);
-    
-            Instantiate(Collectable, new Vector3(breakableObject.transform.position.x, -collectableOffsetY + breakableObject.transform.position.y + (1.5f * smallBreakableObject.transform.localScale.y), 0), transform.rotation);
-            Instantiate(Collectable, new Vector3(breakableObject.transform.position.x + smallBreakableObject.transform.localScale.x, -collectableOffsetY + breakableObject.transform.position.y - (0.5f * smallBreakableObject.transform.localScale.y), 0), transform.rotation);
-            Instantiate(Collectable, new Vector3(breakableObject.transform.position.x - smallBreakableObject.transform.localScale.x, -collectableOffsetY + breakableObject.transform.position.y - (0.5f * smallBreakableObject.transform.localScale.y), 0), transform.rotation);
+            Instantiate(Collectable, new Vector3(breakableObject.transform.position.x, breakableObject.transform.position.y + (1.5f * smallBreakableObject.transform.localScale.y), 0), transform.rotation);
+            Instantiate(Collectable, new Vector3(breakableObject.transform.position.x + smallBreakableObject.transform.localScale.x, breakableObject.transform.position.y - (0.5f * smallBreakableObject.transform.localScale.y), 0), transform.rotation);
+            Instantiate(Collectable, new Vector3(breakableObject.transform.position.x - smallBreakableObject.transform.localScale.x, breakableObject.transform.position.y - (0.5f * smallBreakableObject.transform.localScale.y), 0), transform.rotation);
 
 
 

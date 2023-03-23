@@ -22,4 +22,9 @@ public class MainMenuScript : MonoBehaviour
     {
         SceneManager.LoadScene("GameScene");
     }
+
+    public void goBallScene()
+    {
+        SceneManager.LoadScene("BallScene");
+    }
 }

@@ -8,6 +8,7 @@ TagManager:
   - Logic
   - Ball
   - Breakable
+  - SelectedBall
   layers:
   - Default
   - TransparentFX

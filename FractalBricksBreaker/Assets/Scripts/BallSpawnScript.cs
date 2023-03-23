@@ -11,19 +11,23 @@ public class BallSpawnScript : MonoBehaviour
     [SerializeField] GameObject line;
     private LineRenderer lineRenderer;
 
+    public RectTransform buttonRect;
+    public RectTransform buttonMainMenu;
     public LogicScript logic;
-    
+
     private bool isDragging = false;
     private Vector3 initialPosition;
     private Color lineColorStart = Color.white;
     private Color lineColorEnd = Color.clear;
     private float lineWidthStart = 0.01f;
     private float lineWidthEnd = 0.1f;
+    public BallDatabase ballDB;
 
 
     void Start()
     {
         logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
+        ball = ballDB.GetBall(PlayerPrefs.GetInt("selectedOption")).ballSprite;
         lineRenderer = line.GetComponent<LineRenderer>();
         lineRenderer.startColor = lineColorStart;
         lineRenderer.endColor = lineColorEnd;
@@ -50,34 +54,49 @@ public class BallSpawnScript : MonoBehaviour
             lineRenderer.SetPosition(1, transform.position);
         }
 
-        if (logic.returnBallCount() > 0)
+        if (RectTransformUtility.RectangleContainsScreenPoint(buttonRect, Input.mousePosition) && Input.GetMouseButtonDown(0))
         {
-            if (Input.GetMouseButtonDown(0))
+            // Handle button click event
+            logic.collectBalls();
+        }else if (RectTransformUtility.RectangleContainsScreenPoint(buttonMainMenu, Input.mousePosition) && Input.GetMouseButtonDown(0) && logic.isPanelActive())
+        {
+            // Handle button click event
+            Debug.Log("Button clicked!");
+            logic.panelSetInactive();
+            logic.goMainMenuScene();
+        }
+        else
+        {
+
+            if (logic.returnBallCount() > 0)
             {
-                isDragging = true;
-                initialPosition = Input.mousePosition;
-            }
-            else if (Input.GetMouseButtonUp(0) && isDragging)
-            {
-                Vector3 releasePosition = Input.mousePosition;
-                Vector3 direction = (initialPosition - releasePosition).normalized;
-                if(direction.y < 0.1)
+                if (Input.GetMouseButtonDown(0))
                 {
-                    isDragging = false;
-                    return;
+                    isDragging = true;
+                    initialPosition = Input.mousePosition;
 
                 }
-                logic.decreaseBall();
-                GameObject newBall = spawnBall();
-                Rigidbody2D rb = newBall.GetComponent<Rigidbody2D>();
+                else if (Input.GetMouseButtonUp(0) && isDragging)
+                {
+                    Vector3 releasePosition = Input.mousePosition;
+                    Vector3 direction = (initialPosition - releasePosition).normalized;
+                    if(direction.y < 0.1)
+                    {
+                        isDragging = false;
+                        return;
+
+                    }
+                    logic.decreaseBall();
+                    GameObject newBall = spawnBall();
+                    Rigidbody2D rb = newBall.GetComponent<Rigidbody2D>();
 
                 
-                Vector3 force = direction * ballSpeed;
-                rb.AddForce(force);
-                isDragging = false;
+                    Vector3 force = direction * ballSpeed;
+                    rb.AddForce(force);
+                    isDragging = false;
+                }
             }
         }
-
     }
 
     GameObject spawnBall()
