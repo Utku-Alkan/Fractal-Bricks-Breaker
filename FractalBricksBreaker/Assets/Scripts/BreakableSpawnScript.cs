@@ -42,7 +42,7 @@ public class BreakableSpawnScript : MonoBehaviour
         centerBreakables.Add(Breakable3);
         centerBreakables.Add(Breakable4);
         centerBreakables.Add(Breakable5);
-
+        logic.setCoin(PlayerPrefs.GetInt("CoinAmount"));
     }
 
     // Update is called once per frame
