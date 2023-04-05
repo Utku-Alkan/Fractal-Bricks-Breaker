@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96b51ac124429884999001d742cf3191, type: 3}
+  m_Name: BallDB
+  m_EditorClassIdentifier: 
+  balls:
+  - ballName: Classic
+    ballRarity: Common
+    ballSprite: {fileID: 8717496493352523691, guid: 2575f81883bf18e4b80cadf7b4cee1c5, type: 3}
+    unlocked: 1
+    cost: 0
+  - ballName: Big Ball
+    ballRarity: Common
+    ballSprite: {fileID: 8717496493352523691, guid: 038f026d91e0c1845ac7899d6f0bab42, type: 3}
+    unlocked: 0
+    cost: 1
+  - ballName: Small Ball
+    ballRarity: Common
+    ballSprite: {fileID: 8717496493352523691, guid: 8b04feb1d262ae94798e3698ec69c732, type: 3}
+    unlocked: 0
+    cost: 1
+  - ballName: Very Big Ball
+    ballRarity: Great
+    ballSprite: {fileID: 8717496493352523691, guid: bbd4d59f7d871924880109dd6ef50f16, type: 3}
+    unlocked: 0
+    cost: 2
+  - ballName: Marble
+    ballRarity: Rare
+    ballSprite: {fileID: 8717496493352523691, guid: a9e10bf9f8d15c44c95baebd3a433970, type: 3}
+    unlocked: 0
+    cost: 2
+  - ballName: Sun Ball
+    ballRarity: Rare
+    ballSprite: {fileID: 8717496493352523691, guid: f5c75f833564ba04d8249e1f98656615, type: 3}
+    unlocked: 0
+    cost: 50
+  - ballName: Square Ball
+    ballRarity: Legendary
+    ballSprite: {fileID: 2109337020969332529, guid: 274416763f6ead144b68194530f03211, type: 3}
+    unlocked: 0
+    cost: 3
