@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BreakableSpawnScript : MonoBehaviour
 {
+    private float TimeInterval = 0;
 
     [SerializeField] GameObject Breakable1; // square
     [SerializeField] GameObject Breakable2; // circle
@@ -43,14 +44,29 @@ public class BreakableSpawnScript : MonoBehaviour
         centerBreakables.Add(Breakable4);
         centerBreakables.Add(Breakable5);
         logic.setCoin(PlayerPrefs.GetInt("CoinAmount"));
+
+        CheckFinished();
     }
 
-    // Update is called once per frame
     void Update()
+    {
+        // ones per in seconds
+        TimeInterval += Time.deltaTime;
+        if (TimeInterval >= 3)
+        {
+            TimeInterval = 0;
+
+            CheckFinished();
+
+        }
+    }
+
+    private void CheckFinished()
     {
 
         if (GameObject.FindGameObjectsWithTag("Breakable").Length <= 0)
         {
+
             levelCounter++;
             logic.setLevel(levelCounter);
             if (FractalLevel1 < 3 && (levelCounter % 2 == 0))

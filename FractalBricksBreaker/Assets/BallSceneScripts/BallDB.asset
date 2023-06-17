@@ -16,35 +16,35 @@ MonoBehaviour:
   - ballName: Classic
     ballRarity: Common
     ballSprite: {fileID: 8717496493352523691, guid: 2575f81883bf18e4b80cadf7b4cee1c5, type: 3}
-    unlocked: 1
+    _unlocked: 1
     cost: 0
   - ballName: Big Ball
     ballRarity: Common
     ballSprite: {fileID: 8717496493352523691, guid: 038f026d91e0c1845ac7899d6f0bab42, type: 3}
-    unlocked: 0
+    _unlocked: 0
     cost: 1
   - ballName: Small Ball
     ballRarity: Common
     ballSprite: {fileID: 8717496493352523691, guid: 8b04feb1d262ae94798e3698ec69c732, type: 3}
-    unlocked: 0
+    _unlocked: 1
     cost: 1
   - ballName: Very Big Ball
     ballRarity: Great
     ballSprite: {fileID: 8717496493352523691, guid: bbd4d59f7d871924880109dd6ef50f16, type: 3}
-    unlocked: 0
+    _unlocked: 0
     cost: 2
   - ballName: Marble
     ballRarity: Rare
     ballSprite: {fileID: 8717496493352523691, guid: a9e10bf9f8d15c44c95baebd3a433970, type: 3}
-    unlocked: 0
+    _unlocked: 0
     cost: 2
   - ballName: Sun Ball
     ballRarity: Rare
     ballSprite: {fileID: 8717496493352523691, guid: f5c75f833564ba04d8249e1f98656615, type: 3}
-    unlocked: 0
+    _unlocked: 0
     cost: 50
   - ballName: Square Ball
     ballRarity: Legendary
     ballSprite: {fileID: 2109337020969332529, guid: 274416763f6ead144b68194530f03211, type: 3}
-    unlocked: 0
+    _unlocked: 0
     cost: 3

@@ -18,21 +18,6 @@ public class LogicScript : MonoBehaviour
     [SerializeField] Text coinCountText;
 
 
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
     public void increaseBall(int a)
     {
         int currentCount = int.Parse(ballCount.text);

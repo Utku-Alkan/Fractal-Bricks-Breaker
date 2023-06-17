@@ -29,6 +29,8 @@ public class BallManager : MonoBehaviour
         {
             ball.LoadState();
         }
+        ballDB.balls[0].unlocked = true;
+
 
         money.text = "Coin: " + PlayerPrefs.GetInt("CoinAmount".ToString());
         if (!PlayerPrefs.HasKey("selectedOption"))

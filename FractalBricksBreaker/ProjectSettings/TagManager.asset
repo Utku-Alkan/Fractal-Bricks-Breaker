@@ -9,6 +9,7 @@ TagManager:
   - Ball
   - Breakable
   - SelectedBall
+  - BreakableSpawn
   layers:
   - Default
   - TransparentFX
