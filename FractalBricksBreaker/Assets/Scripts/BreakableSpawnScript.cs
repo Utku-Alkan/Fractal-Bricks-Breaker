@@ -11,7 +11,7 @@ public class BreakableSpawnScript : MonoBehaviour
     [SerializeField] GameObject Breakable3; // hexagon
     [SerializeField] GameObject Breakable4; // triangle   
     [SerializeField] GameObject Breakable5; // line
-
+    [SerializeField] GameObject BreakableHeart; // heart
 
     [SerializeField] GameObject Collectable;
     [SerializeField] GameObject Collectable2;
@@ -66,20 +66,41 @@ public class BreakableSpawnScript : MonoBehaviour
 
         if (GameObject.FindGameObjectsWithTag("Breakable").Length <= 0)
         {
+            DestroyCollectables();
 
             levelCounter++;
             logic.setLevel(levelCounter);
-            if (FractalLevel1 < 3 && (levelCounter % 2 == 0))
+            if (FractalLevel1 < 3)
             {
                 FractalLevel1++;
 
                 logic.setDegree(FractalLevel1);
             }else if (levelCounter % 5 == 0)
             {
+                FractalLevel1 = -1;
                 Debug.Log("Special level");
+
+                logic.setDegreeString();
+                logic.setFractalName("COIN RUSH!");
+
+                SpecialLevelSpawn();
+                logic.increaseBall(2);
+
+
+                //destroy all balls after completing the fractal
+
+
+                GameObject[] ballss = GameObject.FindGameObjectsWithTag("Ball");
+
+                foreach (GameObject balll in ballss)
+                {
+                    Destroy(balll);
+                }
+
+                return;
             }
 
-            randomizer = new System.Random().Next(0, 9);
+            randomizer = new System.Random().Next(0, 12);
 
             Debug.Log(randomizer);
 
@@ -153,7 +174,7 @@ public class BreakableSpawnScript : MonoBehaviour
                 CenterBreakable = Instantiate(centerBreakables[randomizer], new Vector3(0, transform.position.y, 0), centerBreakables[randomizer].transform.rotation);
                 spawnAround(CenterBreakable, FractalLevel1);
             }
-            logic.increaseBall(3);
+            logic.increaseBall(2);
 
 
             //destroy all balls after completing the fractal
@@ -337,5 +358,49 @@ public class BreakableSpawnScript : MonoBehaviour
         cantorSet(around1, maxDepth-1, isLine);
         cantorSet(around2, maxDepth-1, isLine);
 
+    }
+
+
+
+    void SpecialLevelSpawn()
+    {
+        randomizer = new System.Random().Next(0, 2);
+
+        Debug.Log("Special Level Randomizer: " + randomizer.ToString());
+
+        GameObject newCoin = Instantiate(Coin, new Vector3(0, transform.position.y, 0), transform.rotation); //coin init
+
+        newCoin.transform.localScale = newCoin.transform.localScale * 7;
+
+        if (randomizer == 0)
+        {
+            spawnAround(newCoin, 2);
+        }else if(randomizer == 1)
+        {
+            spawnAroundTriangle(newCoin, 2, true);
+        }else if(randomizer == 2)
+        {
+            cantorSet(newCoin, 2, true);
+        }
+
+        Instantiate(BreakableHeart, new Vector3(transform.position.x, transform.position.y + 4, 0), transform.rotation);
+        Instantiate(BreakableHeart, new Vector3(transform.position.x + 1, transform.position.y + 4, 0), transform.rotation);
+        Instantiate(BreakableHeart, new Vector3(transform.position.x - 1, transform.position.y + 4, 0), transform.rotation);
+        Instantiate(BreakableHeart, new Vector3(transform.position.x + 2, transform.position.y + 4, 0), transform.rotation);
+        Instantiate(BreakableHeart, new Vector3(transform.position.x - 2, transform.position.y + 4, 0), transform.rotation);
+
+
+
+
+    }
+
+    void DestroyCollectables()
+    {
+        GameObject[] collectables = GameObject.FindGameObjectsWithTag("Collectable");
+
+        foreach (GameObject collectable in collectables)
+        {
+            Destroy(collectable);
+        }
     }
 }

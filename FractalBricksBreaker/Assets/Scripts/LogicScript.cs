@@ -50,6 +50,11 @@ public class LogicScript : MonoBehaviour
         degree.text = "Degree: " + a.ToString();
     }
 
+    public void setDegreeString()
+    {
+        degree.text = "Special Level!";
+    }
+
     public void setFractalName(string name)
     {
         fractalName.text = name;
