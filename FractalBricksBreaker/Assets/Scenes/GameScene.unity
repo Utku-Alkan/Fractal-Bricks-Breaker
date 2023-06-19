@@ -844,6 +844,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WallRight
       objectReference: {fileID: 0}
+    - target: {fileID: 3346673676112317181, guid: eefd58c84dad2b342826a7f6cea0a932, type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eefd58c84dad2b342826a7f6cea0a932, type: 3}
 --- !u!1 &833749744
@@ -2111,6 +2115,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3346673676112317181, guid: eefd58c84dad2b342826a7f6cea0a932, type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eefd58c84dad2b342826a7f6cea0a932, type: 3}
 --- !u!1 &1851024254
@@ -2374,6 +2382,7 @@ MonoBehaviour:
   ball: {fileID: 8717496493352523691, guid: 038f026d91e0c1845ac7899d6f0bab42, type: 3}
   ballSpeed: 300
   line: {fileID: 184296608}
+  LaserBallLaser: {fileID: 8717496493352523691, guid: 674f9f4fafee3544f93067d1c564d7e0, type: 3}
   buttonRect: {fileID: 55334348}
   buttonMainMenu: {fileID: 1613740318}
   logic: {fileID: 0}
@@ -2440,6 +2449,10 @@ PrefabInstance:
     - target: {fileID: 3346673676112317181, guid: eefd58c84dad2b342826a7f6cea0a932, type: 3}
       propertyPath: m_Name
       value: WallLeft
+      objectReference: {fileID: 0}
+    - target: {fileID: 3346673676112317181, guid: eefd58c84dad2b342826a7f6cea0a932, type: 3}
+      propertyPath: m_TagString
+      value: Wall
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eefd58c84dad2b342826a7f6cea0a932, type: 3}

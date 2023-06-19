@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallScript : MonoBehaviour
+public class LaserScript : MonoBehaviour
 {
-
     private LogicScript logic;
 
 
@@ -19,7 +18,7 @@ public class BallScript : MonoBehaviour
 
 
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Breakable"))
         {
@@ -27,5 +26,7 @@ public class BallScript : MonoBehaviour
             Destroy(collision.gameObject);
             logic.increaseScore(1);
         }
+
     }
+
 }

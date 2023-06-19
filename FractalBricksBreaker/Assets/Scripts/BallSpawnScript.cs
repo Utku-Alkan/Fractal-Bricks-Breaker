@@ -9,6 +9,8 @@ public class BallSpawnScript : MonoBehaviour
     [SerializeField] GameObject ball;
     [SerializeField] int ballSpeed;
     [SerializeField] GameObject line;
+    [SerializeField] GameObject LaserBallLaser;
+
     private LineRenderer lineRenderer;
 
     public RectTransform buttonRect;
@@ -94,6 +96,24 @@ public class BallSpawnScript : MonoBehaviour
                     Vector3 force = direction * ballSpeed;
                     rb.AddForce(force);
                     isDragging = false;
+
+
+                    // handling X2 Ball
+                    if (newBall.name == "X2Ball(Clone)")
+                    {
+                        GameObject newBall2 = spawnBall();
+
+                        Rigidbody2D rb2 = newBall2.GetComponent<Rigidbody2D>();
+
+                        rb2.AddForce(force*1.2f);
+                    }else if(newBall.name == "LaserBall(Clone)")
+                    {
+                        GameObject newBall2 = Instantiate(LaserBallLaser, new Vector3(0, transform.position.y, 0), transform.rotation);
+                        Rigidbody2D rb2 = newBall2.GetComponent<Rigidbody2D>();
+
+                        rb2.AddForce(force * 2f);
+
+                    }
                 }
             }
         }
@@ -102,6 +122,7 @@ public class BallSpawnScript : MonoBehaviour
     GameObject spawnBall()
     {
         GameObject newBall = Instantiate(ball, new Vector3(0, transform.position.y, 0), transform.rotation);
+
         return newBall;
     }
 

@@ -26,7 +26,7 @@ MonoBehaviour:
   - ballName: Small Ball
     ballRarity: Common
     ballSprite: {fileID: 8717496493352523691, guid: 8b04feb1d262ae94798e3698ec69c732, type: 3}
-    _unlocked: 1
+    _unlocked: 0
     cost: 1
   - ballName: Very Big Ball
     ballRarity: Great
@@ -41,10 +41,20 @@ MonoBehaviour:
   - ballName: Sun Ball
     ballRarity: Rare
     ballSprite: {fileID: 8717496493352523691, guid: f5c75f833564ba04d8249e1f98656615, type: 3}
-    _unlocked: 0
+    _unlocked: 1
     cost: 50
   - ballName: Square Ball
     ballRarity: Legendary
     ballSprite: {fileID: 2109337020969332529, guid: 274416763f6ead144b68194530f03211, type: 3}
-    _unlocked: 0
+    _unlocked: 1
     cost: 3
+  - ballName: X2 Ball
+    ballRarity: Legendary
+    ballSprite: {fileID: 8717496493352523691, guid: a66834ffb48e5e941a758ab8603a2d90, type: 3}
+    _unlocked: 1
+    cost: 200
+  - ballName: Laser Ball
+    ballRarity: Legendary
+    ballSprite: {fileID: 8717496493352523691, guid: b84de541a0a653143bc945bde75b4d19, type: 3}
+    _unlocked: 0
+    cost: 500
