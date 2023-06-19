@@ -70,6 +70,8 @@ public class BreakableSpawnScript : MonoBehaviour
 
             levelCounter++;
             logic.setLevel(levelCounter);
+
+
             if (FractalLevel1 < 3)
             {
                 FractalLevel1++;
@@ -100,7 +102,7 @@ public class BreakableSpawnScript : MonoBehaviour
                 return;
             }
 
-            randomizer = new System.Random().Next(0, 12);
+            randomizer = new System.Random().Next(0, 13);
 
             Debug.Log(randomizer);
 
@@ -114,7 +116,7 @@ public class BreakableSpawnScript : MonoBehaviour
                 //temp.transform.localScale = temp.transform.localScale * 1.6f;
                 CenterBreakable = Instantiate(temp, new Vector3(0, transform.position.y, 0), temp.transform.rotation);
 
-                cantorSet(CenterBreakable, FractalLevel1 + 1, true);
+                cantorSet(CenterBreakable, FractalLevel1 + 1);
                 Destroy(temp);
             }
             else if (randomizer > 8 && randomizer <= 12)
@@ -129,7 +131,7 @@ public class BreakableSpawnScript : MonoBehaviour
                 temp.transform.localScale = new Vector3(temp.transform.localScale.x * 2, temp.transform.localScale.y, temp.transform.localScale.z);
                 CenterBreakable = Instantiate(temp, new Vector3(0, transform.position.y, 0), temp.transform.rotation);
 
-                cantorSet(CenterBreakable, FractalLevel1 + 1, true);
+                cantorSet(CenterBreakable, FractalLevel1 + 1);
                 Destroy(temp);
 
             }
@@ -313,7 +315,7 @@ public class BreakableSpawnScript : MonoBehaviour
 
 
 
-    void cantorSet(GameObject breakableObject, int maxDepth, bool isLine)
+    void cantorSet(GameObject breakableObject, int maxDepth)
     {
         float distanceY = 0.8f;
 
@@ -329,19 +331,12 @@ public class BreakableSpawnScript : MonoBehaviour
 
         smallBreakableObject.transform.localScale = smallScale;
 
-        GameObject around1 = new GameObject();
-        GameObject around2 = new GameObject();
+
         
-        if (isLine)
-        {
-            around1 = Instantiate(smallBreakableObject, new Vector3(breakableObject.transform.position.x - smallBreakableObject.transform.localScale.x, breakableObject.transform.position.y + distanceY, 0), smallBreakableObject.transform.rotation);
-            around2 = Instantiate(smallBreakableObject, new Vector3(breakableObject.transform.position.x + smallBreakableObject.transform.localScale.x, breakableObject.transform.position.y + distanceY, 0), smallBreakableObject.transform.rotation);
 
-        }
-        else
-        {
+        GameObject around1 = Instantiate(smallBreakableObject, new Vector3(breakableObject.transform.position.x - smallBreakableObject.transform.localScale.x, breakableObject.transform.position.y + distanceY, 0), smallBreakableObject.transform.rotation);
+        GameObject around2 = Instantiate(smallBreakableObject, new Vector3(breakableObject.transform.position.x + smallBreakableObject.transform.localScale.x, breakableObject.transform.position.y + distanceY, 0), smallBreakableObject.transform.rotation);
 
-        }
 
 
         if (maxDepth > 1)
@@ -355,8 +350,8 @@ public class BreakableSpawnScript : MonoBehaviour
 
         Destroy(smallBreakableObject);
 
-        cantorSet(around1, maxDepth-1, isLine);
-        cantorSet(around2, maxDepth-1, isLine);
+        cantorSet(around1, maxDepth-1);
+        cantorSet(around2, maxDepth-1);
 
     }
 
@@ -364,30 +359,22 @@ public class BreakableSpawnScript : MonoBehaviour
 
     void SpecialLevelSpawn()
     {
-        randomizer = new System.Random().Next(0, 2);
+        //randomizer = new System.Random().Next(0, 3);
 
-        Debug.Log("Special Level Randomizer: " + randomizer.ToString());
+        //Debug.Log("Special Level Randomizer: " + randomizer.ToString());
 
         GameObject newCoin = Instantiate(Coin, new Vector3(0, transform.position.y, 0), transform.rotation); //coin init
 
-        newCoin.transform.localScale = newCoin.transform.localScale * 7;
+        newCoin.transform.localScale = newCoin.transform.localScale * 8;
 
-        if (randomizer == 0)
-        {
-            spawnAround(newCoin, 2);
-        }else if(randomizer == 1)
-        {
-            spawnAroundTriangle(newCoin, 2, true);
-        }else if(randomizer == 2)
-        {
-            cantorSet(newCoin, 2, true);
-        }
+        spawnAround(newCoin, 2);
+        
 
-        Instantiate(BreakableHeart, new Vector3(transform.position.x, transform.position.y + 4, 0), transform.rotation);
-        Instantiate(BreakableHeart, new Vector3(transform.position.x + 1, transform.position.y + 4, 0), transform.rotation);
-        Instantiate(BreakableHeart, new Vector3(transform.position.x - 1, transform.position.y + 4, 0), transform.rotation);
-        Instantiate(BreakableHeart, new Vector3(transform.position.x + 2, transform.position.y + 4, 0), transform.rotation);
-        Instantiate(BreakableHeart, new Vector3(transform.position.x - 2, transform.position.y + 4, 0), transform.rotation);
+        Instantiate(BreakableHeart, new Vector3(transform.position.x, transform.position.y + 3, 0), transform.rotation);
+        Instantiate(BreakableHeart, new Vector3(transform.position.x + 1, transform.position.y + 3, 0), transform.rotation);
+        Instantiate(BreakableHeart, new Vector3(transform.position.x - 1, transform.position.y + 3, 0), transform.rotation);
+        Instantiate(BreakableHeart, new Vector3(transform.position.x + 2, transform.position.y + 3, 0), transform.rotation);
+        Instantiate(BreakableHeart, new Vector3(transform.position.x - 2, transform.position.y + 3, 0), transform.rotation);
 
 
 
