@@ -11,6 +11,8 @@ public class BreakableSpawnScript : MonoBehaviour
     [SerializeField] GameObject Breakable3; // hexagon
     [SerializeField] GameObject Breakable4; // triangle   
     [SerializeField] GameObject Breakable5; // line
+
+    [SerializeField] GameObject BreakableVerticalLine; // dik cizgi
     [SerializeField] GameObject BreakableHeart; // heart
 
     [SerializeField] GameObject Collectable;
@@ -108,7 +110,16 @@ public class BreakableSpawnScript : MonoBehaviour
 
             Instantiate(Coin, new Vector3(0, transform.position.y, 0), transform.rotation); //coin init
 
-            if (randomizer == 8) // line
+            randomizer = 13;
+            // ALL FRACTAL SPAWNS START
+            
+            
+            if (randomizer == 13) // fractal canopy
+            {
+                CenterBreakable = Instantiate(BreakableVerticalLine, new Vector3(0, transform.position.y, 0), BreakableVerticalLine.transform.rotation);
+                fractalCanopy(CenterBreakable, FractalLevel1+1, 0);
+            }
+            else if (randomizer == 8) // line
             {
                 logic.setFractalName("Cantor Set (original)");
                 randomizer = 4;
@@ -176,7 +187,13 @@ public class BreakableSpawnScript : MonoBehaviour
                 CenterBreakable = Instantiate(centerBreakables[randomizer], new Vector3(0, transform.position.y, 0), centerBreakables[randomizer].transform.rotation);
                 spawnAround(CenterBreakable, FractalLevel1);
             }
+
+
             logic.increaseBall(2);
+
+
+            //ALL FRACTAL SPAWNS END
+
 
 
             //destroy all balls after completing the fractal
@@ -354,6 +371,62 @@ public class BreakableSpawnScript : MonoBehaviour
         cantorSet(around2, maxDepth-1);
 
     }
+
+
+    void fractalCanopy(GameObject rootLine, int maxDepth, int parentInfo) // root = 0, left child = 1, right child = 2
+    {
+        if (maxDepth <= 0)
+        {
+            return;
+        }
+
+
+        GameObject leftNode = Instantiate(rootLine, new Vector3(rootLine.transform.position.x, rootLine.transform.position.y, rootLine.transform.position.z), rootLine.transform.rotation);
+        GameObject rightNode = Instantiate(rootLine, new Vector3(rootLine.transform.position.x, rootLine.transform.position.y, rootLine.transform.position.z), rootLine.transform.rotation);
+
+        leftNode.transform.localScale = rootLine.transform.localScale * 0.75f;
+        rightNode.transform.localScale = rootLine.transform.localScale * 0.75f;
+
+
+        if (parentInfo == 0)
+        {
+            leftNode.transform.position = new Vector3(leftNode.transform.position.x, leftNode.transform.position.y + (rootLine.transform.localScale.y / 2) + (leftNode.transform.localScale.y / 2), leftNode.transform.position.z); ;
+            rightNode.transform.position = new Vector3(rightNode.transform.position.x, rightNode.transform.position.y + (rootLine.transform.localScale.y / 2) + (rightNode.transform.localScale.y / 2), leftNode.transform.position.z);
+
+            Vector3 topPartOfRoot = new Vector3(rootLine.transform.position.x, rootLine.transform.position.y + (rootLine.transform.localScale.y / 2), rootLine.transform.position.z);
+
+            leftNode.transform.RotateAround(topPartOfRoot, new Vector3(0f, 0f, 1f), 16.36f);
+            rightNode.transform.RotateAround(topPartOfRoot, new Vector3(0f, 0f, 1f), -16.36f);
+        }
+        else if(parentInfo == 1)
+        {
+            leftNode.transform.position = new Vector3(leftNode.transform.position.x - Mathf.Sin(rootLine.transform.rotation.z) * rootLine.transform.localScale.y*2, leftNode.transform.position.y + (rootLine.transform.localScale.y / 2) + (leftNode.transform.localScale.y / 2), leftNode.transform.position.z); ;
+            rightNode.transform.position = new Vector3(rightNode.transform.position.x - Mathf.Sin(rootLine.transform.rotation.z) * rootLine.transform.localScale.y * 2, rightNode.transform.position.y + (rootLine.transform.localScale.y / 2) + (rightNode.transform.localScale.y / 2), leftNode.transform.position.z);
+
+            Vector3 topPartOfRoot = new Vector3(rootLine.transform.position.x - Mathf.Sin(rootLine.transform.rotation.z) * rootLine.transform.localScale.y * 2, rootLine.transform.position.y + (rootLine.transform.localScale.y / 2), rootLine.transform.position.z);
+
+            leftNode.transform.RotateAround(topPartOfRoot, new Vector3(0f, 0f, 1f), 16.36f);
+            rightNode.transform.RotateAround(topPartOfRoot, new Vector3(0f, 0f, 1f), -16.36f);
+        }
+        else if (parentInfo == 2)
+        {
+            leftNode.transform.position = new Vector3(leftNode.transform.position.x - Mathf.Sin(rootLine.transform.rotation.z) * rootLine.transform.localScale.y * 2, leftNode.transform.position.y + (rootLine.transform.localScale.y / 2) + (leftNode.transform.localScale.y / 2), leftNode.transform.position.z); ;
+            rightNode.transform.position = new Vector3(rightNode.transform.position.x - Mathf.Sin(rootLine.transform.rotation.z) * rootLine.transform.localScale.y * 2, rightNode.transform.position.y + (rootLine.transform.localScale.y / 2) + (rightNode.transform.localScale.y / 2), leftNode.transform.position.z);
+
+            Vector3 topPartOfRoot = new Vector3(rootLine.transform.position.x - Mathf.Sin(rootLine.transform.rotation.z) * rootLine.transform.localScale.y * 2, rootLine.transform.position.y + (rootLine.transform.localScale.y / 2), rootLine.transform.position.z);
+
+            leftNode.transform.RotateAround(topPartOfRoot, new Vector3(0f, 0f, 1f), 16.36f);
+            rightNode.transform.RotateAround(topPartOfRoot, new Vector3(0f, 0f, 1f), -16.36f);
+        }
+
+
+
+        fractalCanopy(leftNode, maxDepth - 1, 1);
+        fractalCanopy(rightNode, maxDepth - 1, 2);
+
+    }
+
+
 
 
 
