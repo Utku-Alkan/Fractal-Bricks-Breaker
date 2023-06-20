@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -3653481534779155743}
   - component: {fileID: 825368961298714818}
   m_Layer: 3
-  m_Name: Ball
+  m_Name: HackerBall
   m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.9811321, g: 0.937135, b: 0.03147021, a: 1}
+  m_Color: {r: 0.6509434, g: 0.56919605, b: 0.37705588, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -3653481534779155743}
   - component: {fileID: 825368961298714818}
   m_Layer: 3
-  m_Name: Ball
+  m_Name: GravityBall
   m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.9811321, g: 0.937135, b: 0.03147021, a: 1}
+  m_Color: {r: 0.28470987, g: 0.30548847, b: 0.3301887, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -118,7 +118,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
-  m_GravityScale: 0
+  m_GravityScale: 0.2
   m_Material: {fileID: 6200000, guid: 357f38709ecbf0944881f1bb33817606, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1

@@ -99,7 +99,7 @@ public class BallSpawnScript : MonoBehaviour
 
 
                     // handling X2 Ball
-                    if (newBall.name == "X2Ball(Clone)")
+                    if (newBall.name == "X2Ball(Clone)" || newBall.name == "GravityBall(Clone)")
                     {
                         GameObject newBall2 = spawnBall();
 
@@ -113,6 +113,48 @@ public class BallSpawnScript : MonoBehaviour
 
                         rb2.AddForce(force * 2f);
 
+                    }
+                    else if (newBall.name == "X3Ball(Clone)")
+                    {
+                        GameObject newBall2 = spawnBall();
+
+                        Rigidbody2D rb2 = newBall2.GetComponent<Rigidbody2D>();
+
+                        rb2.AddForce(force * 1.2f);
+
+
+                        GameObject newBall3 = spawnBall();
+
+                        Rigidbody2D rb3 = newBall3.GetComponent<Rigidbody2D>();
+
+                        rb3.AddForce(force * 1.4f);
+                    }
+                    else if (newBall.name == "Trio(Clone)")
+                    {
+                        GameObject newBall2 = Instantiate(ball, new Vector3(0, transform.position.y, 0), transform.rotation);
+
+                        newBall2.transform.localScale = ball.transform.localScale * 2;
+
+                        Rigidbody2D rb2 = newBall2.GetComponent<Rigidbody2D>();
+
+                        rb2.AddForce(force);
+
+
+
+                        GameObject newBall3 = Instantiate(ball, new Vector3(0, transform.position.y, 0), transform.rotation);
+
+                        newBall3.transform.localScale = ball.transform.localScale * 3;
+
+                        Rigidbody2D rb3 = newBall3.GetComponent<Rigidbody2D>();
+
+                        rb3.AddForce(force);
+                    }else if (newBall.name == "HackerBall(Clone)")
+                    {
+                        GameObject newBall2 = Instantiate(ball, new Vector3(0, transform.position.y + 8.5f, 0), transform.rotation);
+
+                        Rigidbody2D rb2 = newBall2.GetComponent<Rigidbody2D>();
+
+                        rb2.AddForce(force);
                     }
                 }
             }

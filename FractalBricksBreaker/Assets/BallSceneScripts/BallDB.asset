@@ -28,21 +28,26 @@ MonoBehaviour:
     ballSprite: {fileID: 8717496493352523691, guid: 8b04feb1d262ae94798e3698ec69c732, type: 3}
     _unlocked: 0
     cost: 1
+  - ballName: Earth
+    ballRarity: Common
+    ballSprite: {fileID: 8717496493352523691, guid: ba678a7994ce8f645bb9a36e282ad8a4, type: 3}
+    _unlocked: 0
+    cost: 5
+  - ballName: American Football Ball
+    ballRarity: Rare
+    ballSprite: {fileID: 8717496493352523691, guid: 2093786524aeabe418223556e148628b, type: 3}
+    _unlocked: 0
+    cost: 10
   - ballName: Very Big Ball
     ballRarity: Great
     ballSprite: {fileID: 8717496493352523691, guid: bbd4d59f7d871924880109dd6ef50f16, type: 3}
-    _unlocked: 0
+    _unlocked: 1
     cost: 2
   - ballName: Marble
     ballRarity: Rare
     ballSprite: {fileID: 8717496493352523691, guid: a9e10bf9f8d15c44c95baebd3a433970, type: 3}
     _unlocked: 0
     cost: 2
-  - ballName: Sun Ball
-    ballRarity: Rare
-    ballSprite: {fileID: 8717496493352523691, guid: f5c75f833564ba04d8249e1f98656615, type: 3}
-    _unlocked: 1
-    cost: 50
   - ballName: Square Ball
     ballRarity: Legendary
     ballSprite: {fileID: 2109337020969332529, guid: 274416763f6ead144b68194530f03211, type: 3}
@@ -56,5 +61,30 @@ MonoBehaviour:
   - ballName: Laser Ball
     ballRarity: Legendary
     ballSprite: {fileID: 8717496493352523691, guid: b84de541a0a653143bc945bde75b4d19, type: 3}
-    _unlocked: 0
+    _unlocked: 1
+    cost: 500
+  - ballName: Gravity Ball
+    ballRarity: Legendary
+    ballSprite: {fileID: 8717496493352523691, guid: 7b56125d986a1f541b663194b09ab4bb, type: 3}
+    _unlocked: 1
+    cost: 1000
+  - ballName: X3 Ball
+    ballRarity: Legendary
+    ballSprite: {fileID: 8717496493352523691, guid: d84649db851543446b83e6ca2ae60bc9, type: 3}
+    _unlocked: 1
+    cost: 500
+  - ballName: Trio
+    ballRarity: Legendary
+    ballSprite: {fileID: 8717496493352523691, guid: cb30f72520b4c944982b6d8b2307f9ff, type: 3}
+    _unlocked: 1
+    cost: 500
+  - ballName: Anything Can Be A Ball
+    ballRarity: Legendary
+    ballSprite: {fileID: 8717496493352523691, guid: d6c68ae0d68639f409edd0be557cab0f, type: 3}
+    _unlocked: 1
+    cost: 500
+  - ballName: Hacker Ball
+    ballRarity: Legendary
+    ballSprite: {fileID: 8717496493352523691, guid: e0c9762f1b5082a40aa254470bb138ad, type: 3}
+    _unlocked: 1
     cost: 500

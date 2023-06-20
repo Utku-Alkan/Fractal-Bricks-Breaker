@@ -19,8 +19,8 @@ TagManager:
   - NoCollision
   - Water
   - UI
-  - 
-  - 
+  - Laser
+  - Collectable
   - 
   - 
   - 
