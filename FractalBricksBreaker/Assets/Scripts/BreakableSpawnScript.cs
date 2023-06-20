@@ -104,20 +104,21 @@ public class BreakableSpawnScript : MonoBehaviour
                 return;
             }
 
-            randomizer = new System.Random().Next(0, 13);
+            randomizer = new System.Random().Next(0, 14);
 
             Debug.Log(randomizer);
 
             Instantiate(Coin, new Vector3(0, transform.position.y, 0), transform.rotation); //coin init
 
-            randomizer = 13;
             // ALL FRACTAL SPAWNS START
             
             
             if (randomizer == 13) // fractal canopy
             {
+                logic.setFractalName("Fractal Canopy (Tree)");
+
                 CenterBreakable = Instantiate(BreakableVerticalLine, new Vector3(0, transform.position.y, 0), BreakableVerticalLine.transform.rotation);
-                fractalCanopy(CenterBreakable, FractalLevel1+1, 0);
+                fractalCanopy(CenterBreakable, FractalLevel1+3, 0);
             }
             else if (randomizer == 8) // line
             {
@@ -403,7 +404,7 @@ public class BreakableSpawnScript : MonoBehaviour
             leftNode.transform.position = new Vector3(leftNode.transform.position.x - Mathf.Sin(rootLine.transform.rotation.z) * rootLine.transform.localScale.y*2, leftNode.transform.position.y + (rootLine.transform.localScale.y / 2) + (leftNode.transform.localScale.y / 2), leftNode.transform.position.z); ;
             rightNode.transform.position = new Vector3(rightNode.transform.position.x - Mathf.Sin(rootLine.transform.rotation.z) * rootLine.transform.localScale.y * 2, rightNode.transform.position.y + (rootLine.transform.localScale.y / 2) + (rightNode.transform.localScale.y / 2), leftNode.transform.position.z);
 
-            Vector3 topPartOfRoot = new Vector3(rootLine.transform.position.x - Mathf.Sin(rootLine.transform.rotation.z) * rootLine.transform.localScale.y * 2, rootLine.transform.position.y + (rootLine.transform.localScale.y / 2), rootLine.transform.position.z);
+            Vector3 topPartOfRoot = new Vector3(rootLine.transform.position.x - Mathf.Sin(rootLine.transform.rotation.z) * rootLine.transform.localScale.y, rootLine.transform.position.y + (rootLine.transform.localScale.y / 2), rootLine.transform.position.z);
 
             leftNode.transform.RotateAround(topPartOfRoot, new Vector3(0f, 0f, 1f), 16.36f);
             rightNode.transform.RotateAround(topPartOfRoot, new Vector3(0f, 0f, 1f), -16.36f);
@@ -413,7 +414,7 @@ public class BreakableSpawnScript : MonoBehaviour
             leftNode.transform.position = new Vector3(leftNode.transform.position.x - Mathf.Sin(rootLine.transform.rotation.z) * rootLine.transform.localScale.y * 2, leftNode.transform.position.y + (rootLine.transform.localScale.y / 2) + (leftNode.transform.localScale.y / 2), leftNode.transform.position.z); ;
             rightNode.transform.position = new Vector3(rightNode.transform.position.x - Mathf.Sin(rootLine.transform.rotation.z) * rootLine.transform.localScale.y * 2, rightNode.transform.position.y + (rootLine.transform.localScale.y / 2) + (rightNode.transform.localScale.y / 2), leftNode.transform.position.z);
 
-            Vector3 topPartOfRoot = new Vector3(rootLine.transform.position.x - Mathf.Sin(rootLine.transform.rotation.z) * rootLine.transform.localScale.y * 2, rootLine.transform.position.y + (rootLine.transform.localScale.y / 2), rootLine.transform.position.z);
+            Vector3 topPartOfRoot = new Vector3(rootLine.transform.position.x - Mathf.Sin(rootLine.transform.rotation.z) * rootLine.transform.localScale.y, rootLine.transform.position.y + (rootLine.transform.localScale.y / 2), rootLine.transform.position.z);
 
             leftNode.transform.RotateAround(topPartOfRoot, new Vector3(0f, 0f, 1f), 16.36f);
             rightNode.transform.RotateAround(topPartOfRoot, new Vector3(0f, 0f, 1f), -16.36f);
