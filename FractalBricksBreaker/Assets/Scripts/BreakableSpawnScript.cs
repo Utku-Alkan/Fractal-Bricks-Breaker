@@ -15,7 +15,7 @@ public class BreakableSpawnScript : MonoBehaviour
     [SerializeField] GameObject BreakableVerticalLine; // dik cizgi
     [SerializeField] GameObject BreakableHeart; // heart
 
-    [SerializeField] GameObject Collectable;
+    [SerializeField] GameObject Collectable; // x3 top
     [SerializeField] GameObject Collectable2;
     [SerializeField] GameObject Collectable3;
     [SerializeField] GameObject Coin;
@@ -111,8 +111,8 @@ public class BreakableSpawnScript : MonoBehaviour
             Instantiate(Coin, new Vector3(0, transform.position.y, 0), transform.rotation); //coin init
 
             // ALL FRACTAL SPAWNS START
-            
-            
+
+            randomizer = 13;
             if (randomizer == 13) // fractal canopy
             {
                 logic.setFractalName("Fractal Canopy (Tree)");
@@ -381,6 +381,10 @@ public class BreakableSpawnScript : MonoBehaviour
             return;
         }
 
+        if(maxDepth >= 2)
+        {
+            Instantiate(Collectable, new Vector3(rootLine.transform.position.x, rootLine.transform.position.y, rootLine.transform.position.z), rootLine.transform.rotation);
+        }
 
         GameObject leftNode = Instantiate(rootLine, new Vector3(rootLine.transform.position.x, rootLine.transform.position.y, rootLine.transform.position.z), rootLine.transform.rotation);
         GameObject rightNode = Instantiate(rootLine, new Vector3(rootLine.transform.position.x, rootLine.transform.position.y, rootLine.transform.position.z), rootLine.transform.rotation);
