@@ -112,7 +112,6 @@ public class BreakableSpawnScript : MonoBehaviour
 
             // ALL FRACTAL SPAWNS START
 
-            randomizer = 13;
             if (randomizer == 13) // fractal canopy
             {
                 logic.setFractalName("Fractal Canopy (Tree)");
