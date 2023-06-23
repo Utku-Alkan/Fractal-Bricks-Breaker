@@ -104,7 +104,7 @@ public class BreakableSpawnScript : MonoBehaviour
                 return;
             }
 
-            randomizer = new System.Random().Next(0, 14);
+            randomizer = new System.Random().Next(0, 18);
 
             Debug.Log(randomizer);
 
@@ -112,7 +112,33 @@ public class BreakableSpawnScript : MonoBehaviour
 
             // ALL FRACTAL SPAWNS START
 
-            if (randomizer == 13) // fractal canopy
+            if (randomizer == 14 || randomizer == 15 || randomizer == 16 || randomizer == 17)
+            {
+                if(randomizer == 14)
+                {
+                    logic.setFractalName("T-square (original)");
+                    CenterBreakable = Instantiate(Breakable1, new Vector3(0, transform.position.y, 0), Breakable1.transform.rotation);
+
+                }else if(randomizer == 15)
+                {
+                    logic.setFractalName("T-square with Circle");
+                    CenterBreakable = Instantiate(Breakable2, new Vector3(0, transform.position.y, 0), Breakable2.transform.rotation);
+
+                }else if(randomizer == 16)
+                {
+                    logic.setFractalName("T-square with Hexagon");
+                    CenterBreakable = Instantiate(Breakable3, new Vector3(0, transform.position.y, 0), Breakable3.transform.rotation);
+                }else if(randomizer == 17)
+                {
+                    logic.setFractalName("T-square with Heart");
+                    CenterBreakable = Instantiate(BreakableHeart, new Vector3(0, transform.position.y, 0), BreakableHeart.transform.rotation);
+                    CenterBreakable.transform.localScale = CenterBreakable.transform.localScale * 1.5f;
+                }
+                CenterBreakable.transform.localScale = CenterBreakable.transform.localScale * 1.5f;
+                CenterBreakable.GetComponent<SpriteRenderer>().color = Color.yellow;
+                TSquare(CenterBreakable, FractalLevel1 + 1);
+            }
+            else if (randomizer == 13) // fractal canopy
             {
                 logic.setFractalName("Fractal Canopy (Tree)");
 
@@ -432,7 +458,36 @@ public class BreakableSpawnScript : MonoBehaviour
 
 
 
+    void TSquare(GameObject breakableObject, int maxDepth)
+    {
+        if (maxDepth <= 0)
+        {
+            return;
+        }
 
+        GameObject leftTop = Instantiate(breakableObject, new Vector3(breakableObject.transform.position.x - breakableObject.transform.localScale.x/2, breakableObject.transform.position.y + breakableObject.transform.localScale.y / 2, breakableObject.transform.position.z), breakableObject.transform.rotation);
+        leftTop.transform.localScale = leftTop.transform.localScale / 2;
+        GameObject rightTop = Instantiate(breakableObject, new Vector3(breakableObject.transform.position.x + breakableObject.transform.localScale.x / 2, breakableObject.transform.position.y + breakableObject.transform.localScale.y / 2, breakableObject.transform.position.z), breakableObject.transform.rotation);
+        rightTop.transform.localScale = rightTop.transform.localScale / 2;   
+        GameObject leftBottom = Instantiate(breakableObject, new Vector3(breakableObject.transform.position.x - breakableObject.transform.localScale.x / 2, breakableObject.transform.position.y - breakableObject.transform.localScale.y / 2, breakableObject.transform.position.z), breakableObject.transform.rotation);
+        leftBottom.transform.localScale = leftBottom.transform.localScale / 2;
+        GameObject rightBottom = Instantiate(breakableObject, new Vector3(breakableObject.transform.position.x + breakableObject.transform.localScale.x / 2, breakableObject.transform.position.y - breakableObject.transform.localScale.y / 2, breakableObject.transform.position.z), breakableObject.transform.rotation);
+        rightBottom.transform.localScale = rightBottom.transform.localScale / 2;
+
+        if(maxDepth >= 2)
+        {
+            Instantiate(Collectable, new Vector3(breakableObject.transform.position.x - breakableObject.transform.localScale.x / 2, breakableObject.transform.position.y + breakableObject.transform.localScale.y / 2, breakableObject.transform.position.z), breakableObject.transform.rotation);
+            Instantiate(Collectable, new Vector3(breakableObject.transform.position.x + breakableObject.transform.localScale.x / 2, breakableObject.transform.position.y + breakableObject.transform.localScale.y / 2, breakableObject.transform.position.z), breakableObject.transform.rotation);
+            Instantiate(Collectable, new Vector3(breakableObject.transform.position.x - breakableObject.transform.localScale.x / 2, breakableObject.transform.position.y - breakableObject.transform.localScale.y / 2, breakableObject.transform.position.z), breakableObject.transform.rotation);
+            Instantiate(Collectable, new Vector3(breakableObject.transform.position.x + breakableObject.transform.localScale.x / 2, breakableObject.transform.position.y - breakableObject.transform.localScale.y / 2, breakableObject.transform.position.z), breakableObject.transform.rotation);
+        }
+
+        TSquare(leftTop, maxDepth-1);
+        TSquare(rightTop, maxDepth - 1);
+        TSquare(leftBottom, maxDepth - 1);
+        TSquare(rightBottom, maxDepth - 1);
+
+    }
 
     void SpecialLevelSpawn()
     {
