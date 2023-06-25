@@ -104,15 +104,24 @@ public class BreakableSpawnScript : MonoBehaviour
                 return;
             }
 
-            randomizer = new System.Random().Next(0, 18);
+            randomizer = new System.Random().Next(0, 19);
 
             Debug.Log(randomizer);
 
             Instantiate(Coin, new Vector3(0, transform.position.y, 0), transform.rotation); //coin init
 
             // ALL FRACTAL SPAWNS START
+            if (randomizer == 18)
+            {
+                logic.setFractalName("Pythagoras tree (original)");
 
-            if (randomizer == 14 || randomizer == 15 || randomizer == 16 || randomizer == 17)
+                CenterBreakable = Instantiate(Breakable1, new Vector3(0, transform.position.y, 0), Breakable1.transform.rotation);
+                CenterBreakable.transform.localScale = CenterBreakable.transform.localScale * 0.65f;
+
+                PythagorasTree(CenterBreakable, FractalLevel1 + 2);
+
+            }
+            else if (randomizer == 14 || randomizer == 15 || randomizer == 16 || randomizer == 17)
             {
                 if(randomizer == 14)
                 {
@@ -489,6 +498,61 @@ public class BreakableSpawnScript : MonoBehaviour
 
     }
 
+
+    void PythagorasTree(GameObject breakableObject, int maxDepth)
+    {
+        float rotationAngle = 45f;
+
+        float rootRotationAngle = breakableObject.transform.rotation.eulerAngles.z;
+
+        Vector3 rootDirection = Quaternion.Euler(0, 0, rootRotationAngle) * Vector3.up;
+
+        if (maxDepth <= 0)
+        {
+            return;
+        }
+        GameObject left = Instantiate(breakableObject);
+        left.transform.localScale = left.transform.localScale * 0.707f;
+        GameObject right = Instantiate(breakableObject);
+        right.transform.localScale = right.transform.localScale * 0.707f;
+
+        left.transform.Rotate(Vector3.forward, rotationAngle);
+
+        // Calculate the direction vector based on the rotation angle
+        Vector3 direction = Quaternion.Euler(0, 0, left.transform.rotation.eulerAngles.z) * Vector3.up;
+
+        // Move the object in the calculated direction
+        left.transform.position += breakableObject.transform.localScale.y / 2 * rootDirection;
+        left.transform.position += left.transform.localScale.y * direction;
+
+
+
+
+
+
+        right.transform.Rotate(Vector3.forward, - rotationAngle);
+
+        // Calculate the direction vector based on the rotation angle
+        Vector3 direction2 = Quaternion.Euler(0, 0, right.transform.rotation.eulerAngles.z) * Vector3.up;
+
+        // Move the object in the calculated direction
+        right.transform.position += breakableObject.transform.localScale.y / 2 * rootDirection;
+        right.transform.position += right.transform.localScale.y * direction2;
+
+
+        if(maxDepth >= 2)
+        {
+            Instantiate(Collectable, new Vector3(left.transform.position.x, left.transform.position.y, left.transform.position.z), left.transform.rotation);
+            Instantiate(Collectable, new Vector3(right.transform.position.x, right.transform.position.y, right.transform.position.z), right.transform.rotation);
+        }
+
+
+
+
+        PythagorasTree(left, maxDepth - 1);
+        PythagorasTree(right, maxDepth - 1);
+
+    }
     void SpecialLevelSpawn()
     {
         //randomizer = new System.Random().Next(0, 3);
