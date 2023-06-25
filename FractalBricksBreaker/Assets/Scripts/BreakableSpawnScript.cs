@@ -104,15 +104,24 @@ public class BreakableSpawnScript : MonoBehaviour
                 return;
             }
 
-            randomizer = new System.Random().Next(0, 19);
+            randomizer = new System.Random().Next(0, 22);
 
             Debug.Log(randomizer);
 
             Instantiate(Coin, new Vector3(0, transform.position.y, 0), transform.rotation); //coin init
 
+
             // ALL FRACTAL SPAWNS START
-            randomizer = 13;
-            if (randomizer == 18)
+            if (randomizer >= 19 && randomizer <= 21)
+            {
+                logic.setFractalName("Pythagoras tree with " + centerBreakables[randomizer-18].name);
+
+                CenterBreakable = Instantiate(centerBreakables[randomizer - 18], new Vector3(0, transform.position.y, 0), Breakable1.transform.rotation);
+                CenterBreakable.transform.localScale = CenterBreakable.transform.localScale * 0.65f;
+
+                PythagorasTree(CenterBreakable, FractalLevel1 + 2);
+            }
+            else if (randomizer == 18)
             {
                 logic.setFractalName("Pythagoras tree (original)");
 
@@ -182,18 +191,7 @@ public class BreakableSpawnScript : MonoBehaviour
                 Destroy(temp);
 
             }
-            else if (randomizer == 4) //triangle
-            {
-                logic.setFractalName("Sierpinski Triangle (original)");
-                randomizer = 3;
-                temp = Instantiate(centerBreakables[randomizer]);
-                temp.transform.localScale = temp.transform.localScale * 1.6f;
-                CenterBreakable = Instantiate(temp, new Vector3(0, transform.position.y, 0), temp.transform.rotation);
 
-                spawnAroundTriangle(CenterBreakable, FractalLevel1 + 1, true);
-                Destroy(temp);
-
-            }
             else if (randomizer > 4 && randomizer <= 7)
             {
 
@@ -208,7 +206,19 @@ public class BreakableSpawnScript : MonoBehaviour
                 spawnAroundTriangle(CenterBreakable, FractalLevel1 + 1, false);
                 Destroy(temp);
             }
-            else // 0 -> square, 1 -> circle, 2 -> hexagon, 3 -> triangle
+            else if (randomizer == 4) //triangle
+            {
+                logic.setFractalName("Sierpinski Triangle (original)");
+                randomizer = 3;
+                temp = Instantiate(centerBreakables[randomizer]);
+                temp.transform.localScale = temp.transform.localScale * 1.6f;
+                CenterBreakable = Instantiate(temp, new Vector3(0, transform.position.y, 0), temp.transform.rotation);
+
+                spawnAroundTriangle(CenterBreakable, FractalLevel1 + 1, true);
+                Destroy(temp);
+
+            }
+            else if (randomizer >= 0 && randomizer <= 3)// 0 -> square, 1 -> circle, 2 -> hexagon, 3 -> triangle
             {
                 if (randomizer == 0)
                 {
