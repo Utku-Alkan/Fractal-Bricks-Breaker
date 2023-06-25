@@ -111,6 +111,7 @@ public class BreakableSpawnScript : MonoBehaviour
             Instantiate(Coin, new Vector3(0, transform.position.y, 0), transform.rotation); //coin init
 
             // ALL FRACTAL SPAWNS START
+            randomizer = 13;
             if (randomizer == 18)
             {
                 logic.setFractalName("Pythagoras tree (original)");
@@ -410,6 +411,8 @@ public class BreakableSpawnScript : MonoBehaviour
 
     void fractalCanopy(GameObject rootLine, int maxDepth, int parentInfo) // root = 0, left child = 1, right child = 2
     {
+        float rotationAngle = 360.0f / 22.0f;
+
         if (maxDepth <= 0)
         {
             return;
@@ -427,42 +430,41 @@ public class BreakableSpawnScript : MonoBehaviour
         rightNode.transform.localScale = rootLine.transform.localScale * 0.75f;
 
 
-        if (parentInfo == 0)
-        {
-            leftNode.transform.position = new Vector3(leftNode.transform.position.x, leftNode.transform.position.y + (rootLine.transform.localScale.y / 2) + (leftNode.transform.localScale.y / 2), leftNode.transform.position.z); ;
-            rightNode.transform.position = new Vector3(rightNode.transform.position.x, rightNode.transform.position.y + (rootLine.transform.localScale.y / 2) + (rightNode.transform.localScale.y / 2), leftNode.transform.position.z);
 
-            Vector3 topPartOfRoot = new Vector3(rootLine.transform.position.x, rootLine.transform.position.y + (rootLine.transform.localScale.y / 2), rootLine.transform.position.z);
+        float rootRotationAngle = rootLine.transform.rotation.eulerAngles.z;
+        Vector3 rootDirection = Quaternion.Euler(0, 0, rootRotationAngle) * Vector3.up;
 
-            leftNode.transform.RotateAround(topPartOfRoot, new Vector3(0f, 0f, 1f), 16.36f);
-            rightNode.transform.RotateAround(topPartOfRoot, new Vector3(0f, 0f, 1f), -16.36f);
-        }
-        else if(parentInfo == 1)
-        {
-            leftNode.transform.position = new Vector3(leftNode.transform.position.x - Mathf.Sin(rootLine.transform.rotation.z) * rootLine.transform.localScale.y*2, leftNode.transform.position.y + (rootLine.transform.localScale.y / 2) + (leftNode.transform.localScale.y / 2), leftNode.transform.position.z); ;
-            rightNode.transform.position = new Vector3(rightNode.transform.position.x - Mathf.Sin(rootLine.transform.rotation.z) * rootLine.transform.localScale.y * 2, rightNode.transform.position.y + (rootLine.transform.localScale.y / 2) + (rightNode.transform.localScale.y / 2), leftNode.transform.position.z);
 
-            Vector3 topPartOfRoot = new Vector3(rootLine.transform.position.x - Mathf.Sin(rootLine.transform.rotation.z) * rootLine.transform.localScale.y, rootLine.transform.position.y + (rootLine.transform.localScale.y / 2), rootLine.transform.position.z);
 
-            leftNode.transform.RotateAround(topPartOfRoot, new Vector3(0f, 0f, 1f), 16.36f);
-            rightNode.transform.RotateAround(topPartOfRoot, new Vector3(0f, 0f, 1f), -16.36f);
-        }
-        else if (parentInfo == 2)
-        {
-            leftNode.transform.position = new Vector3(leftNode.transform.position.x - Mathf.Sin(rootLine.transform.rotation.z) * rootLine.transform.localScale.y * 2, leftNode.transform.position.y + (rootLine.transform.localScale.y / 2) + (leftNode.transform.localScale.y / 2), leftNode.transform.position.z); ;
-            rightNode.transform.position = new Vector3(rightNode.transform.position.x - Mathf.Sin(rootLine.transform.rotation.z) * rootLine.transform.localScale.y * 2, rightNode.transform.position.y + (rootLine.transform.localScale.y / 2) + (rightNode.transform.localScale.y / 2), leftNode.transform.position.z);
 
-            Vector3 topPartOfRoot = new Vector3(rootLine.transform.position.x - Mathf.Sin(rootLine.transform.rotation.z) * rootLine.transform.localScale.y, rootLine.transform.position.y + (rootLine.transform.localScale.y / 2), rootLine.transform.position.z);
+        leftNode.transform.Rotate(Vector3.forward, rotationAngle);
 
-            leftNode.transform.RotateAround(topPartOfRoot, new Vector3(0f, 0f, 1f), 16.36f);
-            rightNode.transform.RotateAround(topPartOfRoot, new Vector3(0f, 0f, 1f), -16.36f);
-        }
+        // Calculate the direction vector based on the rotation angle
+        Vector3 direction = Quaternion.Euler(0, 0, leftNode.transform.rotation.eulerAngles.z) * Vector3.up;
+
+        // Move the object in the calculated direction
+        leftNode.transform.position += rootLine.transform.localScale.y / 2 * rootDirection;
+        leftNode.transform.position += leftNode.transform.localScale.y/2 * direction;
+
+
+
+
+
+        rightNode.transform.Rotate(Vector3.forward, -rotationAngle);
+
+        // Calculate the direction vector based on the rotation angle
+        Vector3 direction2 = Quaternion.Euler(0, 0, rightNode.transform.rotation.eulerAngles.z) * Vector3.up;
+
+        // Move the object in the calculated direction
+        rightNode.transform.position += rootLine.transform.localScale.y / 2 * rootDirection;
+        rightNode.transform.position += rightNode.transform.localScale.y /2* direction2;
+
+
 
 
 
         fractalCanopy(leftNode, maxDepth - 1, 1);
         fractalCanopy(rightNode, maxDepth - 1, 2);
-
     }
 
 
