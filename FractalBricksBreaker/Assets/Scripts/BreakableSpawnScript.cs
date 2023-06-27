@@ -14,6 +14,8 @@ public class BreakableSpawnScript : MonoBehaviour
 
     [SerializeField] GameObject BreakableVerticalLine; // dik cizgi
     [SerializeField] GameObject BreakableHeart; // heart
+    [SerializeField] GameObject Ring; // ring
+
 
     [SerializeField] GameObject Collectable; // x3 top
     [SerializeField] GameObject Collectable2;
@@ -104,7 +106,7 @@ public class BreakableSpawnScript : MonoBehaviour
                 return;
             }
 
-            randomizer = new System.Random().Next(0, 22);
+            randomizer = new System.Random().Next(0, 23);
 
             Debug.Log(randomizer);
 
@@ -112,7 +114,14 @@ public class BreakableSpawnScript : MonoBehaviour
 
 
             // ALL FRACTAL SPAWNS START
-            if (randomizer >= 19 && randomizer <= 21)
+
+            if (randomizer == 22)
+            {
+                logic.setFractalName("Circular Infinity");
+                CenterBreakable = Instantiate(Ring, new Vector3(0, transform.position.y, 0), Breakable2.transform.rotation);
+                CircularInfinity(CenterBreakable, FractalLevel1+2);
+            }
+            else if (randomizer >= 19 && randomizer <= 21)
             {
                 logic.setFractalName("Pythagoras tree with " + centerBreakables[randomizer-18].name);
 
@@ -513,16 +522,17 @@ public class BreakableSpawnScript : MonoBehaviour
 
     void PythagorasTree(GameObject breakableObject, int maxDepth)
     {
+        if (maxDepth <= 0)
+        {
+            return;
+        }
         float rotationAngle = 45f;
 
         float rootRotationAngle = breakableObject.transform.rotation.eulerAngles.z;
 
         Vector3 rootDirection = Quaternion.Euler(0, 0, rootRotationAngle) * Vector3.up;
 
-        if (maxDepth <= 0)
-        {
-            return;
-        }
+
         GameObject left = Instantiate(breakableObject);
         left.transform.localScale = left.transform.localScale * 0.707f;
         GameObject right = Instantiate(breakableObject);
@@ -564,6 +574,32 @@ public class BreakableSpawnScript : MonoBehaviour
         PythagorasTree(left, maxDepth - 1);
         PythagorasTree(right, maxDepth - 1);
 
+    }
+
+    void CircularInfinity(GameObject mainRing, int maxDepth)
+    {
+        if(maxDepth <= 0)
+        {
+            return;
+        }
+
+        GameObject leftRing = Instantiate(mainRing);
+        GameObject rightRing = Instantiate(mainRing);
+
+        leftRing.transform.localScale /= 2;
+        rightRing.transform.localScale /= 2;
+
+        leftRing.transform.position = new Vector3(leftRing.transform.position.x - mainRing.transform.localScale.x, leftRing.transform.position.y, leftRing.transform.position.z);
+        rightRing.transform.position = new Vector3(rightRing.transform.position.x + mainRing.transform.localScale.x, rightRing.transform.position.y, rightRing.transform.position.z);
+
+        if (maxDepth >= 3)
+        {
+            Instantiate(Collectable, new Vector3(leftRing.transform.position.x, leftRing.transform.position.y + leftRing.transform.localScale.y, leftRing.transform.position.z), leftRing.transform.rotation);
+            Instantiate(Collectable, new Vector3(rightRing.transform.position.x, rightRing.transform.position.y - rightRing.transform.localScale.y, rightRing.transform.position.z), rightRing.transform.rotation);
+        }
+
+        CircularInfinity(leftRing, maxDepth - 1);
+        CircularInfinity(rightRing, maxDepth - 1);
     }
     void SpecialLevelSpawn()
     {

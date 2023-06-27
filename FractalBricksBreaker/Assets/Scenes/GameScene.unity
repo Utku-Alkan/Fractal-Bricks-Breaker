@@ -1631,6 +1631,7 @@ MonoBehaviour:
   Breakable5: {fileID: 6545474217113443845, guid: b8f326a5862134849a2529d652e1a25f, type: 3}
   BreakableVerticalLine: {fileID: 8330216145183365384, guid: f631b4bd67132da4186ef0a2a1206b91, type: 3}
   BreakableHeart: {fileID: 168822, guid: 1f3c7458d29ae40e990c8a71bb393745, type: 3}
+  Ring: {fileID: 2990279631174975443, guid: 7c55957c5b7327049b3de49542e18e10, type: 3}
   Collectable: {fileID: 2575205864826508752, guid: cbc74c12dc132354a809306d986ed343, type: 3}
   Collectable2: {fileID: 2575205864826508752, guid: a6e4f02cfcd57214b8267c6d99696ff0, type: 3}
   Collectable3: {fileID: 2575205864826508752, guid: 7761fd4f704b67844bd1f44109ae0d50, type: 3}
