@@ -12,6 +12,7 @@ TagManager:
   - BreakableSpawn
   - Collectable
   - Wall
+  - GameTween
   layers:
   - Default
   - TransparentFX
