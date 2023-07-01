@@ -173,17 +173,7 @@ public class BreakableSpawnScript : MonoBehaviour
                 CenterBreakable = Instantiate(BreakableVerticalLine, new Vector3(0, transform.position.y, 0), BreakableVerticalLine.transform.rotation);
                 fractalCanopy(CenterBreakable, FractalLevel1+3, 0);
             }
-            else if (randomizer == 8) // line
-            {
-                logic.setFractalName("Cantor Set (original)");
-                randomizer = 4;
-                temp = Instantiate(centerBreakables[randomizer]);
-                //temp.transform.localScale = temp.transform.localScale * 1.6f;
-                CenterBreakable = Instantiate(temp, new Vector3(0, transform.position.y, 0), temp.transform.rotation);
-
-                cantorSet(CenterBreakable, FractalLevel1 + 1);
-                Destroy(temp);
-            }
+            
             else if (randomizer > 8 && randomizer <= 12)
             {
                 randomizer = randomizer - 9;
@@ -200,20 +190,44 @@ public class BreakableSpawnScript : MonoBehaviour
                 Destroy(temp);
 
             }
-
-            else if (randomizer > 4 && randomizer <= 7)
+            else if (randomizer == 8) // line
             {
-
-                randomizer = randomizer - 5;
-
-                logic.setFractalName("Sierpinski Triangle with " + centerBreakables[randomizer].name);
-
+                logic.setFractalName("Cantor Set (original)");
+                randomizer = 4;
                 temp = Instantiate(centerBreakables[randomizer]);
-                temp.transform.localScale = temp.transform.localScale * 1.6f;
+                //temp.transform.localScale = temp.transform.localScale * 1.6f;
                 CenterBreakable = Instantiate(temp, new Vector3(0, transform.position.y, 0), temp.transform.rotation);
 
-                spawnAroundTriangle(CenterBreakable, FractalLevel1 + 1, false);
+                cantorSet(CenterBreakable, FractalLevel1 + 1);
                 Destroy(temp);
+            }
+            else if (randomizer > 4 && randomizer <= 7) // guzel fractallarin oranini artirdik
+            {
+
+                if(randomizer == 5)
+                {
+                    logic.setFractalName("T-square (original)");
+                    CenterBreakable = Instantiate(Breakable1, new Vector3(0, transform.position.y, 0), Breakable1.transform.rotation);
+                    CenterBreakable.transform.localScale = CenterBreakable.transform.localScale * 1.5f;
+                    CenterBreakable.GetComponent<SpriteRenderer>().color = Color.yellow;
+                    TSquare(CenterBreakable, FractalLevel1 + 1);
+                }else if(randomizer == 6)
+                {
+                    logic.setFractalName("Pythagoras tree with " + centerBreakables[randomizer - 18].name);
+
+                    CenterBreakable = Instantiate(centerBreakables[randomizer - 18], new Vector3(0, transform.position.y, 0), Breakable1.transform.rotation);
+                    CenterBreakable.transform.localScale = CenterBreakable.transform.localScale * 0.65f;
+
+                    PythagorasTree(CenterBreakable, FractalLevel1 + 2);
+                }else if(randomizer == 7)
+                {
+                    logic.setFractalName("Fractal Canopy (Tree)");
+
+                    CenterBreakable = Instantiate(BreakableVerticalLine, new Vector3(0, transform.position.y, 0), BreakableVerticalLine.transform.rotation);
+                    CenterBreakable.GetComponent<SpriteRenderer>().color = Color.cyan;
+
+                    fractalCanopy(CenterBreakable, FractalLevel1 + 3, 0);
+                }
             }
             else if (randomizer == 4) //triangle
             {
@@ -592,10 +606,10 @@ public class BreakableSpawnScript : MonoBehaviour
         leftRing.transform.position = new Vector3(leftRing.transform.position.x - mainRing.transform.localScale.x, leftRing.transform.position.y, leftRing.transform.position.z);
         rightRing.transform.position = new Vector3(rightRing.transform.position.x + mainRing.transform.localScale.x, rightRing.transform.position.y, rightRing.transform.position.z);
 
-        if (maxDepth >= 3)
+        if (maxDepth >= 2)
         {
-            Instantiate(Collectable, new Vector3(leftRing.transform.position.x, leftRing.transform.position.y + leftRing.transform.localScale.y, leftRing.transform.position.z), leftRing.transform.rotation);
-            Instantiate(Collectable, new Vector3(rightRing.transform.position.x, rightRing.transform.position.y - rightRing.transform.localScale.y, rightRing.transform.position.z), rightRing.transform.rotation);
+            Instantiate(Collectable, new Vector3(leftRing.transform.position.x, leftRing.transform.position.y + leftRing.transform.localScale.y*2, leftRing.transform.position.z), leftRing.transform.rotation);
+            Instantiate(Collectable, new Vector3(rightRing.transform.position.x, rightRing.transform.position.y - rightRing.transform.localScale.y*2, rightRing.transform.position.z), rightRing.transform.rotation);
         }
 
         CircularInfinity(leftRing, maxDepth - 1);
