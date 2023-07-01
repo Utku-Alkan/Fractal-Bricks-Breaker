@@ -47,7 +47,7 @@ public class LogicScript : MonoBehaviour
 
     public void setDegree(int a)
     {
-        degree.text = "Degree: " + a.ToString();
+        degree.text = "Degree: " + (a+1).ToString();
     }
 
     public void setDegreeString()

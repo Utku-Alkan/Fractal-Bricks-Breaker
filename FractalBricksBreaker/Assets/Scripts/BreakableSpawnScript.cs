@@ -90,7 +90,7 @@ public class BreakableSpawnScript : MonoBehaviour
                 logic.setFractalName("COIN RUSH!");
 
                 SpecialLevelSpawn();
-                logic.increaseBall(2);
+                logic.increaseBall(1);
 
 
                 //destroy all balls after completing the fractal
@@ -213,13 +213,14 @@ public class BreakableSpawnScript : MonoBehaviour
                     TSquare(CenterBreakable, FractalLevel1 + 1);
                 }else if(randomizer == 6)
                 {
-                    logic.setFractalName("Pythagoras tree with " + centerBreakables[randomizer - 18].name);
+                    logic.setFractalName("Pythagoras tree (original)");
 
-                    CenterBreakable = Instantiate(centerBreakables[randomizer - 18], new Vector3(0, transform.position.y, 0), Breakable1.transform.rotation);
+                    CenterBreakable = Instantiate(Breakable1, new Vector3(0, transform.position.y, 0), Breakable1.transform.rotation);
                     CenterBreakable.transform.localScale = CenterBreakable.transform.localScale * 0.65f;
 
                     PythagorasTree(CenterBreakable, FractalLevel1 + 2);
-                }else if(randomizer == 7)
+                }
+                else if(randomizer == 7)
                 {
                     logic.setFractalName("Fractal Canopy (Tree)");
 
@@ -617,22 +618,73 @@ public class BreakableSpawnScript : MonoBehaviour
     }
     void SpecialLevelSpawn()
     {
-        //randomizer = new System.Random().Next(0, 3);
+        int randomNum = new System.Random().Next(0, 3);
+        if (randomNum == 0)
+        {
+            GameObject newCoin = Instantiate(Coin, new Vector3(0, transform.position.y, 0), transform.rotation); //coin init
 
-        //Debug.Log("Special Level Randomizer: " + randomizer.ToString());
+            newCoin.transform.localScale = newCoin.transform.localScale * 8;
 
-        GameObject newCoin = Instantiate(Coin, new Vector3(0, transform.position.y, 0), transform.rotation); //coin init
+            spawnAround(newCoin, 2);
 
-        newCoin.transform.localScale = newCoin.transform.localScale * 8;
 
-        spawnAround(newCoin, 2);
-        
+            Instantiate(BreakableHeart, new Vector3(transform.position.x, transform.position.y + 3, 0), transform.rotation);
+            Instantiate(BreakableHeart, new Vector3(transform.position.x + 1, transform.position.y + 3, 0), transform.rotation);
+            Instantiate(BreakableHeart, new Vector3(transform.position.x - 1, transform.position.y + 3, 0), transform.rotation);
+            Instantiate(BreakableHeart, new Vector3(transform.position.x + 2, transform.position.y + 3, 0), transform.rotation);
+            Instantiate(BreakableHeart, new Vector3(transform.position.x - 2, transform.position.y + 3, 0), transform.rotation);
+        }else if (randomNum == 1)
+        {
+            Instantiate(BreakableHeart, new Vector3(transform.position.x, transform.position.y + 3, 0), transform.rotation);
 
-        Instantiate(BreakableHeart, new Vector3(transform.position.x, transform.position.y + 3, 0), transform.rotation);
-        Instantiate(BreakableHeart, new Vector3(transform.position.x + 1, transform.position.y + 3, 0), transform.rotation);
-        Instantiate(BreakableHeart, new Vector3(transform.position.x - 1, transform.position.y + 3, 0), transform.rotation);
-        Instantiate(BreakableHeart, new Vector3(transform.position.x + 2, transform.position.y + 3, 0), transform.rotation);
-        Instantiate(BreakableHeart, new Vector3(transform.position.x - 2, transform.position.y + 3, 0), transform.rotation);
+            for(int i = 0; i<10; i++)
+            {
+                Instantiate(Coin, new Vector3(transform.position.x-2+(i*(4.0f/9.0f)), transform.position.y + 2, 0), transform.rotation);
+            }
+
+            Instantiate(Collectable2, new Vector3(transform.position.x, transform.position.y - 3, 0), transform.rotation);
+
+            Instantiate(Collectable3, new Vector3(transform.position.x-0.25f, transform.position.y - 2, 0), transform.rotation);
+            Instantiate(Collectable3, new Vector3(transform.position.x+0.25f, transform.position.y - 2, 0), transform.rotation);
+
+            Instantiate(Collectable2, new Vector3(transform.position.x+0.5f, transform.position.y-1, 0), transform.rotation);
+            Instantiate(Collectable2, new Vector3(transform.position.x, transform.position.y-1, 0), transform.rotation);
+            Instantiate(Collectable2, new Vector3(transform.position.x-0.5f, transform.position.y-1, 0), transform.rotation);
+
+            Instantiate(Collectable3, new Vector3(transform.position.x + 0.75f, transform.position.y, 0), transform.rotation);
+            Instantiate(Collectable3, new Vector3(transform.position.x + 0.25f, transform.position.y, 0), transform.rotation);
+            Instantiate(Collectable3, new Vector3(transform.position.x - 0.75f, transform.position.y, 0), transform.rotation);
+            Instantiate(Collectable3, new Vector3(transform.position.x - 0.25f, transform.position.y, 0), transform.rotation);
+
+            Instantiate(Collectable2, new Vector3(transform.position.x + 1f, transform.position.y + 1, 0), transform.rotation);
+            Instantiate(Collectable2, new Vector3(transform.position.x + 0.5f, transform.position.y + 1, 0), transform.rotation);
+            Instantiate(Collectable2, new Vector3(transform.position.x, transform.position.y + 1, 0), transform.rotation);
+            Instantiate(Collectable2, new Vector3(transform.position.x - 0.5f, transform.position.y + 1, 0), transform.rotation);
+            Instantiate(Collectable2, new Vector3(transform.position.x - 1f, transform.position.y + 1, 0), transform.rotation);
+
+        }
+        else if (randomNum == 2)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                Instantiate(Coin, new Vector3(transform.position.x - 2 + i, transform.position.y + 2, 0), transform.rotation);
+            }
+            for (int i = 0; i < 5; i++)
+            {
+                Instantiate(Coin, new Vector3(transform.position.x - 2 + i, transform.position.y + 1, 0), transform.rotation);
+            }
+            for (int i = 0; i < 5; i++)
+            {
+                Instantiate(Coin, new Vector3(transform.position.x - 2 + i, transform.position.y, 0), transform.rotation);
+            }
+
+            Instantiate(BreakableVerticalLine, new Vector3(transform.position.x - 2.2f, transform.position.y - 3, 0), Quaternion.Euler(0, 0, 15));
+            Instantiate(BreakableVerticalLine, new Vector3(transform.position.x + 2.2f, transform.position.y - 3, 0), Quaternion.Euler(0, 0, -15));
+
+
+        }
+
+
 
 
 
