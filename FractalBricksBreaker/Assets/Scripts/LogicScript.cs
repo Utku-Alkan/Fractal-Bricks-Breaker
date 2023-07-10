@@ -128,24 +128,20 @@ public class LogicScript : MonoBehaviour
     {
         int temp = int.Parse(coinCountText.text);
         temp = temp + a;
-        coinCountText.text = temp.ToString();
+        coinCountText.text = "Coins: " + temp.ToString();
     }
 
     public void coinDecrease(int a)
     {
         int temp = int.Parse(coinCountText.text);
         temp = temp - a;
-        coinCountText.text = temp.ToString();
+        coinCountText.text = "Coins: " + temp.ToString();
     }
 
-    public int getCoin()
-    {
-        return int.Parse(coinCountText.text);
-    }
 
     public void setCoin(int a)
     {
-        coinCountText.text = a.ToString();
+        coinCountText.text = "Coins: " + a.ToString();
     }
 
     public bool isEnough(int limit)

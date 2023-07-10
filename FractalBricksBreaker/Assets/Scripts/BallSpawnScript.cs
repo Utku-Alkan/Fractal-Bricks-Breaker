@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BallSpawnScript : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    [SerializeField] GameObject ball;
+    private GameObject ball;
     [SerializeField] int ballSpeed;
-    [SerializeField] GameObject line;
+    [SerializeField] GameObject line;  
     [SerializeField] GameObject LaserBallLaser;
+    [SerializeField] Image ballDisplay;
 
     private LineRenderer lineRenderer;
 
@@ -30,6 +32,10 @@ public class BallSpawnScript : MonoBehaviour
     {
         logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
         ball = ballDB.GetBall(PlayerPrefs.GetInt("selectedOption")).ballSprite;
+        ballDisplay.sprite = ball.GetComponent<SpriteRenderer>().sprite;
+        ballDisplay.color = ball.GetComponent<SpriteRenderer>().color;
+
+
         lineRenderer = line.GetComponent<LineRenderer>();
         lineRenderer.startColor = lineColorStart;
         lineRenderer.endColor = lineColorEnd;

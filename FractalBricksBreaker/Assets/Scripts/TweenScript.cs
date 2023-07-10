@@ -71,9 +71,9 @@ public class TweenScript : MonoBehaviour
         leftNode.transform.localScale = leftNode.transform.localScale * 0f;
         rightNode.transform.localScale = rightNode.transform.localScale * 0f;
 
-        LeanTween.scale(leftNode, rootVect3, 1.5f).setDelay(0.2f).setEase(LeanTweenType.easeOutElastic);
+        LeanTween.scale(leftNode, rootVect3, 0.9f).setEase(LeanTweenType.easeOutElastic);
 
-        LeanTween.scale(rightNode, rootVect3, 1.5f).setDelay(0.2f).setEase(LeanTweenType.easeOutElastic);
+        LeanTween.scale(rightNode, rootVect3, 0.9f).setEase(LeanTweenType.easeOutElastic);
         // animation finish
 
         StartCoroutine(Waiter(leftNode, rightNode, maxDepth));
@@ -84,7 +84,7 @@ public class TweenScript : MonoBehaviour
 
     IEnumerator Waiter(GameObject left, GameObject right, int maxDepth)
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
 
         fractalCanopy(left, maxDepth - 1);
         fractalCanopy(right, maxDepth - 1);

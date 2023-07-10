@@ -60,7 +60,7 @@ public class BreakableSpawnScript : MonoBehaviour
     {
         // ones per in seconds
         TimeInterval += Time.deltaTime;
-        if (TimeInterval >= 1.5f)
+        if (TimeInterval >= 3f)
         {
             TimeInterval = 0;
 
