@@ -92,7 +92,7 @@ public class TweenScript : MonoBehaviour
 
     void BringGameName(GameObject text)
     {
-        LeanTween.moveLocal(text, new Vector3(0f, 600f, 2f), 4f).setDelay(.1f).setEase(LeanTweenType.easeInOutCubic);
+        LeanTween.moveLocal(text, new Vector3(0f, 600f, 2f), 2f).setDelay(.1f).setEase(LeanTweenType.easeInOutCubic);
     }
 
 }
