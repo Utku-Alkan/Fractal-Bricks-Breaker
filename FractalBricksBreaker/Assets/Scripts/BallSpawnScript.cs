@@ -61,29 +61,24 @@ public class BallSpawnScript : MonoBehaviour
             lineRenderer.SetPosition(1, transform.position);
         }
 
-        if (RectTransformUtility.RectangleContainsScreenPoint(buttonMainMenu, Input.mousePosition) && Input.GetMouseButtonDown(0) && logic.isPanelActive())
-        {
-            // Handle button click event
-            Debug.Log("Button clicked!");
-            logic.panelSetInactive();
-            logic.goMainMenuScene();
-        }
-        else
-        {
 
-            if (logic.returnBallCount() > 0)
+
+
+            if (Input.GetMouseButtonDown(0))
             {
-                if (Input.GetMouseButtonDown(0))
+                if (logic.returnBallCount() > 0)
                 {
                     isDragging = true;
                     initialPosition = Input.mousePosition;
-
                 }
-                else if (Input.GetMouseButtonUp(0) && isDragging)
+            }
+            else if (Input.GetMouseButtonUp(0) && isDragging)
+            {
+                if (logic.returnBallCount() > 0)
                 {
                     Vector3 releasePosition = Input.mousePosition;
                     Vector3 direction = (initialPosition - releasePosition).normalized;
-                    if(direction.y < 0.1)
+                    if (direction.y < 0.1)
                     {
                         isDragging = false;
                         return;
@@ -93,7 +88,7 @@ public class BallSpawnScript : MonoBehaviour
                     GameObject newBall = spawnBall();
                     Rigidbody2D rb = newBall.GetComponent<Rigidbody2D>();
 
-                
+
                     Vector3 force = direction * ballSpeed;
                     rb.AddForce(force);
                     isDragging = false;
@@ -106,8 +101,9 @@ public class BallSpawnScript : MonoBehaviour
 
                         Rigidbody2D rb2 = newBall2.GetComponent<Rigidbody2D>();
 
-                        rb2.AddForce(force*1.2f);
-                    }else if(newBall.name == "LaserBall(Clone)")
+                        rb2.AddForce(force * 1.2f);
+                    }
+                    else if (newBall.name == "LaserBall(Clone)")
                     {
                         GameObject newBall2 = Instantiate(LaserBallLaser, new Vector3(0, transform.position.y, 0), transform.rotation);
                         Rigidbody2D rb2 = newBall2.GetComponent<Rigidbody2D>();
@@ -149,7 +145,8 @@ public class BallSpawnScript : MonoBehaviour
                         Rigidbody2D rb3 = newBall3.GetComponent<Rigidbody2D>();
 
                         rb3.AddForce(force);
-                    }else if (newBall.name == "HackerBall(Clone)")
+                    }
+                    else if (newBall.name == "HackerBall(Clone)")
                     {
                         GameObject newBall2 = Instantiate(ball, new Vector3(0, transform.position.y + 8.5f, 0), transform.rotation);
 
@@ -159,7 +156,7 @@ public class BallSpawnScript : MonoBehaviour
                     }
                 }
             }
-        }
+        
     }
 
     GameObject spawnBall()
