@@ -15,7 +15,6 @@ public class BallSpawnScript : MonoBehaviour
 
     private LineRenderer lineRenderer;
 
-    public RectTransform buttonRect;
     public RectTransform buttonMainMenu;
     public LogicScript logic;
 
@@ -62,11 +61,7 @@ public class BallSpawnScript : MonoBehaviour
             lineRenderer.SetPosition(1, transform.position);
         }
 
-        if (RectTransformUtility.RectangleContainsScreenPoint(buttonRect, Input.mousePosition) && Input.GetMouseButtonDown(0))
-        {
-            // Handle button click event
-            logic.collectBalls();
-        }else if (RectTransformUtility.RectangleContainsScreenPoint(buttonMainMenu, Input.mousePosition) && Input.GetMouseButtonDown(0) && logic.isPanelActive())
+        if (RectTransformUtility.RectangleContainsScreenPoint(buttonMainMenu, Input.mousePosition) && Input.GetMouseButtonDown(0) && logic.isPanelActive())
         {
             // Handle button click event
             Debug.Log("Button clicked!");
@@ -169,7 +164,7 @@ public class BallSpawnScript : MonoBehaviour
 
     GameObject spawnBall()
     {
-        GameObject newBall = Instantiate(ball, new Vector3(0, transform.position.y, 0), transform.rotation);
+        GameObject newBall = Instantiate(ball, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
 
         return newBall;
     }

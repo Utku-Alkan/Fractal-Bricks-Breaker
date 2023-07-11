@@ -74,6 +74,8 @@ public class BreakableSpawnScript : MonoBehaviour
 
         if (GameObject.FindGameObjectsWithTag("Breakable").Length <= 0)
         {
+            ParticleSystem ps = GameObject.Find("Particle").GetComponent<ParticleSystem>();
+            ps.Play();
             StartCoroutine(BreakablesFinished());
             tweenScript.BlackScreenVisible();
             tweenScript.StarsAnimation();

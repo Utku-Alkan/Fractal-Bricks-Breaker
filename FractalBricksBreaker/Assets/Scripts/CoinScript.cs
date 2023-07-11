@@ -5,7 +5,7 @@ using UnityEngine;
 public class CoinScript : MonoBehaviour
 {
 
-    public LogicScript logic;
+    private LogicScript logic;
 
     private void Start()
     {

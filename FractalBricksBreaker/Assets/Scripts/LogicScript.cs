@@ -68,6 +68,7 @@ public class LogicScript : MonoBehaviour
         {
             Destroy(ball);
         }
+        Debug.Log("Collect Clicked!");
     }
 
     public void goMainMenuScene()

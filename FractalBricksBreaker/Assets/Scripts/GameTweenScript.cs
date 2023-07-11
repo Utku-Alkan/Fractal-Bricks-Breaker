@@ -38,7 +38,7 @@ public class GameTweenScript : MonoBehaviour
 
         LeanTween.alpha(blackScreen, 0, 0);
 
-        LeanTween.alpha(blackScreen, 1, 0.5f);
+        LeanTween.alpha(blackScreen, 1, 1.5f);
     }
 
     public void BlackScreenInvisible()

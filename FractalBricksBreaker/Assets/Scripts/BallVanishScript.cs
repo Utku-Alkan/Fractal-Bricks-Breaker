@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BallVanishScript : MonoBehaviour
 {
-
-    public LogicScript logic;
+    [SerializeField] GameObject ballSpawn;
+    private LogicScript logic;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +22,17 @@ public class BallVanishScript : MonoBehaviour
         {
             // Destroy the ball object when it collides with an object with the "BallVanish" tag
             Destroy(collision.gameObject);
+            if(this.name == "BallVanishMain")
+            {
+                ChangeBallSpawn(collision.transform.position.x);
+            }
         }
+    }
+
+    private void ChangeBallSpawn(float AxisX)
+    {
+
+        LeanTween.moveLocal(ballSpawn, new Vector3(AxisX, ballSpawn.transform.position.y, ballSpawn.transform.position.z), 1f).setEase(LeanTweenType.easeInOutCubic);
+
     }
 }
