@@ -32,7 +32,7 @@ public class BallVanishScript : MonoBehaviour
     private void ChangeBallSpawn(float AxisX)
     {
 
-        LeanTween.moveLocal(ballSpawn, new Vector3(AxisX, ballSpawn.transform.position.y, ballSpawn.transform.position.z), 1f).setEase(LeanTweenType.easeInOutCubic);
+        LeanTween.moveLocal(ballSpawn, new Vector3(AxisX, ballSpawn.transform.position.y, ballSpawn.transform.position.z), 0.5f).setEase(LeanTweenType.easeInOutCubic);
 
     }
 }

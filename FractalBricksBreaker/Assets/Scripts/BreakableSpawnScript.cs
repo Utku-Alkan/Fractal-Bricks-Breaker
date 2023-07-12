@@ -228,7 +228,7 @@ public class BreakableSpawnScript : MonoBehaviour
                     logic.setFractalName("Fractal Canopy (Tree)");
 
                     CenterBreakable = Instantiate(BreakableVerticalLine, new Vector3(0, transform.position.y, 0), BreakableVerticalLine.transform.rotation);
-                    CenterBreakable.GetComponent<SpriteRenderer>().color = Color.cyan;
+                    CenterBreakable.GetComponent<SpriteRenderer>().color = Color.black;
 
                     fractalCanopy(CenterBreakable, FractalLevel1 + 3, 0);
                 }
@@ -528,6 +528,7 @@ public class BreakableSpawnScript : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         logic.panelSetActive();
+        logic.panelScaleAnimationToOne();
         if (PlayerPrefs.GetInt("Highscore") < levelCounter)
         {
 

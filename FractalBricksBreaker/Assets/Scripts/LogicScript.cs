@@ -125,6 +125,16 @@ public class LogicScript : MonoBehaviour
         return panel.activeInHierarchy;
     }
 
+    public void panelScaleAnimationToOne()
+    {
+        LeanTween.scale(panel, new Vector3(1f, 1f, 1f), 2f).setEase(LeanTweenType.easeInOutCirc);
+    }
+
+    public void panelScaleToZero()
+    {
+        panel.transform.localScale = new Vector3(5f, 5f, 5f);
+    }
+
     public void coinIncrease(int a)
     {
         int temp = int.Parse(coinCountText.text);
