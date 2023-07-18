@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class LogicScript : MonoBehaviour
 {
     [SerializeField] Text ballCount;
-    [SerializeField] Text score;
     [SerializeField] Text degree;
     [SerializeField] Text fractalName;
     [SerializeField] Text levelCount;
@@ -17,6 +16,17 @@ public class LogicScript : MonoBehaviour
     [SerializeField] GameObject panel;
     [SerializeField] Text coinCountText;
 
+    private bool isBallSpawnMoveAllowed = true;
+
+    public void setBallSpawnMoveAllowed(bool isAllowed)
+    {
+        isBallSpawnMoveAllowed = isAllowed;
+    }
+
+    public bool getIsBallSpawnMoveAllowed()
+    {
+        return isBallSpawnMoveAllowed;
+    }
 
     public void increaseBall(int a)
     {
@@ -38,12 +48,6 @@ public class LogicScript : MonoBehaviour
         return int.Parse(ballCount.text);
     }
 
-    public void increaseScore(int a)
-    {
-        int temp = int.Parse(score.text);
-        temp = temp+a;
-        score.text = temp.ToString();
-    }
 
     public void setDegree(int a)
     {
@@ -165,5 +169,11 @@ public class LogicScript : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public void AddMoneyHack()
+    {
+        PlayerPrefs.SetInt("CoinAmount", PlayerPrefs.GetInt("CoinAmount") + 50);
+        setCoin(PlayerPrefs.GetInt("CoinAmount"));
     }
 }

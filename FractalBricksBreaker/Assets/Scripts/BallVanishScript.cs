@@ -24,7 +24,11 @@ public class BallVanishScript : MonoBehaviour
             Destroy(collision.gameObject);
             if(this.name == "BallVanishMain")
             {
-                ChangeBallSpawn(collision.transform.position.x);
+                if (logic.getIsBallSpawnMoveAllowed())
+                {
+                    ChangeBallSpawn(collision.transform.position.x);
+                    logic.setBallSpawnMoveAllowed(false);
+                }
             }
         }
     }

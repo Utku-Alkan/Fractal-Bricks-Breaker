@@ -84,6 +84,7 @@ public class BallSpawnScript : MonoBehaviour
                         return;
 
                     }
+                    logic.setBallSpawnMoveAllowed(true); // allowing first ball to change ball spawner's place
                     logic.decreaseBall();
                     GameObject newBall = spawnBall();
                     Rigidbody2D rb = newBall.GetComponent<Rigidbody2D>();

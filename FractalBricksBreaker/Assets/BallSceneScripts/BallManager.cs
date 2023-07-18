@@ -56,7 +56,11 @@ public class BallManager : MonoBehaviour
             selectedOption = 0;
         }
         UpdateBall(selectedOption);
-        PlayerPrefs.SetInt("selectedOption", selectedOption);
+        if (ballDB.GetBall(selectedOption).unlocked)
+        {
+            PlayerPrefs.SetInt("selectedOption", selectedOption);
+
+        }
     }
 
     public void BackOption()
@@ -68,7 +72,12 @@ public class BallManager : MonoBehaviour
             selectedOption = ballDB.ballSpecifyCount-1;
         }
         UpdateBall(selectedOption);
-        PlayerPrefs.SetInt("selectedOption", selectedOption);
+
+        if (ballDB.GetBall(selectedOption).unlocked)
+        {
+            PlayerPrefs.SetInt("selectedOption", selectedOption);
+
+        }
     }
 
     private void UpdateBall(int selectedOption2)

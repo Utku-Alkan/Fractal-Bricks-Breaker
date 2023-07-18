@@ -24,7 +24,6 @@ public class LaserScript : MonoBehaviour
         {
 
             Destroy(collision.gameObject);
-            logic.increaseScore(1);
         }
         else if (collision.gameObject.CompareTag("Wall"))
         {

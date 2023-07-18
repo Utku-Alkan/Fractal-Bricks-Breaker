@@ -25,7 +25,6 @@ public class BallScript : MonoBehaviour
         {
 
             Destroy(collision.gameObject);
-            logic.increaseScore(1);
         }
     }
 }
