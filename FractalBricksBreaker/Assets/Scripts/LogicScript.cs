@@ -15,6 +15,7 @@ public class LogicScript : MonoBehaviour
     [SerializeField] Text newHighscoreText;
     [SerializeField] GameObject panel;
     [SerializeField] Text coinCountText;
+    [SerializeField] GameObject gameOverCloud;
 
     private bool isBallSpawnMoveAllowed = true;
 
@@ -117,11 +118,14 @@ public class LogicScript : MonoBehaviour
     public void panelSetActive()
     {
         panel.SetActive(true);
+        gameOverCloud.SetActive(true);
     }
 
     public void panelSetInactive()
     {
         panel.SetActive(false);
+        gameOverCloud.SetActive(false);
+
     }
 
     public bool isPanelActive()
@@ -136,7 +140,7 @@ public class LogicScript : MonoBehaviour
 
     public void panelScaleToZero()
     {
-        panel.transform.localScale = new Vector3(5f, 5f, 5f);
+        panel.transform.localScale = new Vector3(0f, 0f, 0f);
     }
 
     public void coinIncrease(int a)
