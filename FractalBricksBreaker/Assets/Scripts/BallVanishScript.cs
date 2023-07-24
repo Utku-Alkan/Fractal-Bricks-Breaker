@@ -35,8 +35,20 @@ public class BallVanishScript : MonoBehaviour
 
     private void ChangeBallSpawn(float AxisX)
     {
+        if (AxisX < 2 && AxisX > -2)
+        {
+            LeanTween.moveLocal(ballSpawn, new Vector3(AxisX, ballSpawn.transform.position.y, ballSpawn.transform.position.z), 1f).setEase(LeanTweenType.easeInOutCubic);
 
-        LeanTween.moveLocal(ballSpawn, new Vector3(AxisX, ballSpawn.transform.position.y, ballSpawn.transform.position.z), 0.5f).setEase(LeanTweenType.easeInOutCubic);
+        }else if (AxisX >= 1)
+        {
+            LeanTween.moveLocal(ballSpawn, new Vector3(2, ballSpawn.transform.position.y, ballSpawn.transform.position.z), 1f).setEase(LeanTweenType.easeInOutCubic);
+            Debug.Log("Characther too right");
+        }
+        else if (AxisX <= -1)
+        {
+            LeanTween.moveLocal(ballSpawn, new Vector3(-2, ballSpawn.transform.position.y, ballSpawn.transform.position.z), 1f).setEase(LeanTweenType.easeInOutCubic);
+            Debug.Log("Characther too left");
+        }
 
     }
 }
