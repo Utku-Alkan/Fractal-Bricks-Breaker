@@ -871,11 +871,13 @@ public class BreakableSpawnScript : MonoBehaviour
             newCoin.transform.localScale = newCoin.transform.localScale * 8;
 
             spawnAround(newCoin, 1);
+            newCoin.transform.localScale = newCoin.transform.localScale / 3;
 
             GameObject newCollectable = Instantiate(Collectable, new Vector3(0, transform.position.y, 0), transform.rotation);
-            newCollectable.transform.localScale = newCollectable.transform.localScale * 2;
+            newCollectable.transform.localScale = newCollectable.transform.localScale * 8;
 
             spawnAround(newCollectable, 1);
+
 
 
             Instantiate(BreakableHeart, new Vector3(transform.position.x, transform.position.y + 3, 0), transform.rotation);
