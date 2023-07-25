@@ -135,7 +135,9 @@ public class LogicScript : MonoBehaviour
 
     public void panelScaleAnimationToOne()
     {
-        LeanTween.scale(panel, new Vector3(1f, 1f, 1f), 2f).setEase(LeanTweenType.easeInOutCirc);
+        LeanTween.scale(panel, new Vector3(1f, 1f, 1f), 2f).setEase(LeanTweenType.easeInOutSine);
+        LeanTween.rotateAroundLocal(panel, Vector3.forward, 720f, 1f).setEase(LeanTweenType.easeOutCubic);
+
     }
 
     public void panelScaleToZero()

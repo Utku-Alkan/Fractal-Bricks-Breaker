@@ -95,7 +95,11 @@ public class BallManager : MonoBehaviour
             selectButton.gameObject.SetActive(true);
             buyButton.gameObject.SetActive(false);
 
+            if (ballDB.GetBall(selectedOption).unlocked)
+            {
+                PlayerPrefs.SetInt("selectedOption", selectedOption);
 
+            }
         }
         else
         {
