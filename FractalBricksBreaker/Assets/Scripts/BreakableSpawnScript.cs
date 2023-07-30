@@ -81,10 +81,12 @@ public class BreakableSpawnScript : MonoBehaviour
             tweenScript.StarsAnimation();
             tweenScript.CongratsTextPopUp();
             tweenScript.BlackScreenInvisible();
+            logic.PlayYouWinAudio();
         }
         else if (GameObject.FindGameObjectsWithTag("Ball").Length <= 0 && logic.returnBallCount() == 0 && !logic.isPanelActive()) // game over
         {
             StartCoroutine(GameOver());
+
 
         }
     }
@@ -103,7 +105,6 @@ public class BreakableSpawnScript : MonoBehaviour
         {
             FractalLevel1++;
 
-            logic.setDegree(FractalLevel1);
 
             randomizer = new System.Random().Next(0, 23);
 
@@ -172,7 +173,7 @@ public class BreakableSpawnScript : MonoBehaviour
             {
                 logic.setFractalName("Fractal Canopy (Tree)");
 
-                CenterBreakable = Instantiate(BreakableVerticalLine, new Vector3(0, transform.position.y, 0), BreakableVerticalLine.transform.rotation);
+                CenterBreakable = Instantiate(BreakableVerticalLine, new Vector3(0, transform.position.y-1, 0), BreakableVerticalLine.transform.rotation);
                 fractalCanopy(CenterBreakable, FractalLevel1 + 3, 0);
             }
 
@@ -227,7 +228,7 @@ public class BreakableSpawnScript : MonoBehaviour
                 {
                     logic.setFractalName("Fractal Canopy (Tree)");
 
-                    CenterBreakable = Instantiate(BreakableVerticalLine, new Vector3(0, transform.position.y, 0), BreakableVerticalLine.transform.rotation);
+                    CenterBreakable = Instantiate(BreakableVerticalLine, new Vector3(0, transform.position.y-1, 0), BreakableVerticalLine.transform.rotation);
                     CenterBreakable.GetComponent<SpriteRenderer>().color = Color.black;
 
                     fractalCanopy(CenterBreakable, FractalLevel1 + 3, 0);
@@ -285,7 +286,6 @@ public class BreakableSpawnScript : MonoBehaviour
             FractalLevel1 = -1;
             Debug.Log("Special level");
 
-            logic.setDegreeString();
             logic.setFractalName("COIN RUSH!");
 
             SpecialLevelSpawn();
@@ -321,7 +321,6 @@ public class BreakableSpawnScript : MonoBehaviour
         {
             FractalLevel1++;
 
-            logic.setDegree(FractalLevel1);
 
             randomizer = new System.Random().Next(0, 23);
 
@@ -390,7 +389,7 @@ public class BreakableSpawnScript : MonoBehaviour
             {
                 logic.setFractalName("Fractal Canopy (Tree)");
 
-                CenterBreakable = Instantiate(BreakableVerticalLine, new Vector3(0, transform.position.y, 0), BreakableVerticalLine.transform.rotation);
+                CenterBreakable = Instantiate(BreakableVerticalLine, new Vector3(0, transform.position.y-1, 0), BreakableVerticalLine.transform.rotation);
                 fractalCanopy(CenterBreakable, FractalLevel1 + 3, 0);
             }
 
@@ -445,7 +444,7 @@ public class BreakableSpawnScript : MonoBehaviour
                 {
                     logic.setFractalName("Fractal Canopy (Tree)");
 
-                    CenterBreakable = Instantiate(BreakableVerticalLine, new Vector3(0, transform.position.y, 0), BreakableVerticalLine.transform.rotation);
+                    CenterBreakable = Instantiate(BreakableVerticalLine, new Vector3(0, transform.position.y-1, 0), BreakableVerticalLine.transform.rotation);
                     CenterBreakable.GetComponent<SpriteRenderer>().color = Color.cyan;
 
                     fractalCanopy(CenterBreakable, FractalLevel1 + 3, 0);
@@ -503,7 +502,6 @@ public class BreakableSpawnScript : MonoBehaviour
             FractalLevel1 = -1;
             Debug.Log("Special level");
 
-            logic.setDegreeString();
             logic.setFractalName("COIN RUSH!");
 
             SpecialLevelSpawn();
@@ -534,11 +532,14 @@ public class BreakableSpawnScript : MonoBehaviour
 
             PlayerPrefs.SetInt("Highscore", levelCounter);
             logic.setNewHighscoreText("NEW HIGHSCORE!!!");
+            logic.PlayNewHighscoreAudio();
         }
         else
         {
 
             logic.setNewHighscoreText("Game Over");
+            logic.PlayYouLoseAudio();
+
         }
 
         logic.setScoreEnd("Your Score: " + levelCounter.ToString());

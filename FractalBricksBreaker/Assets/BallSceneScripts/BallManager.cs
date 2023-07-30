@@ -14,6 +14,8 @@ public class BallManager : MonoBehaviour
     public GameObject selectedBall;
 
     public Button selectButton;
+    public Button homeButton;
+
     public Text price;
     public Text money;
     public Button buyButton;
@@ -93,6 +95,7 @@ public class BallManager : MonoBehaviour
         {
             price.gameObject.SetActive(false);
             selectButton.gameObject.SetActive(true);
+            homeButton.gameObject.SetActive(false);
             buyButton.gameObject.SetActive(false);
 
             if (ballDB.GetBall(selectedOption).unlocked)
@@ -105,6 +108,7 @@ public class BallManager : MonoBehaviour
         {
             price.gameObject.SetActive(true);
             selectButton.gameObject.SetActive(false);
+            homeButton.gameObject.SetActive(true);
             buyButton.gameObject.SetActive(true);
             price.text = "Price: " + ball.cost.ToString();
         }
@@ -127,7 +131,7 @@ public class BallManager : MonoBehaviour
             price.gameObject.SetActive(false);
             selectButton.gameObject.SetActive(true);
             buyButton.gameObject.SetActive(false);
-
+            homeButton.gameObject.SetActive(false);
             PlayerPrefs.SetInt("CoinAmount", PlayerPrefs.GetInt("CoinAmount") - ball.cost);
         }
 

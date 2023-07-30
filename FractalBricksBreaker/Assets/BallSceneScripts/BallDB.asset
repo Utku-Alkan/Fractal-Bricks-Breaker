@@ -28,11 +28,6 @@ MonoBehaviour:
     ballSprite: {fileID: 8717496493352523691, guid: 8b04feb1d262ae94798e3698ec69c732, type: 3}
     _unlocked: 0
     cost: 20
-  - ballName: Very Big Ball
-    ballRarity: Common
-    ballSprite: {fileID: 8717496493352523691, guid: bbd4d59f7d871924880109dd6ef50f16, type: 3}
-    _unlocked: 0
-    cost: 10
   - ballName: Earth
     ballRarity: Great
     ballSprite: {fileID: 8717496493352523691, guid: ba678a7994ce8f645bb9a36e282ad8a4, type: 3}
@@ -54,7 +49,7 @@ MonoBehaviour:
     _unlocked: 0
     cost: 100
   - ballName: Square Ball
-    ballRarity: Legendary
+    ballRarity: Rare
     ballSprite: {fileID: 2109337020969332529, guid: 274416763f6ead144b68194530f03211, type: 3}
     _unlocked: 0
     cost: 200
@@ -91,5 +86,5 @@ MonoBehaviour:
   - ballName: Hacker Ball
     ballRarity: Legendary
     ballSprite: {fileID: 8717496493352523691, guid: e0c9762f1b5082a40aa254470bb138ad, type: 3}
-    _unlocked: 0
+    _unlocked: 1
     cost: 1000

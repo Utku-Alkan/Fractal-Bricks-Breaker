@@ -129,7 +129,7 @@ public class BallSpawnScript : MonoBehaviour
                     }
                     else if (newBall.name == "Trio(Clone)")
                     {
-                        GameObject newBall2 = Instantiate(ball, new Vector3(0, transform.position.y, 0), transform.rotation);
+                        GameObject newBall2 = spawnBall();
 
                         newBall2.transform.localScale = ball.transform.localScale * 2;
 
@@ -139,7 +139,7 @@ public class BallSpawnScript : MonoBehaviour
 
 
 
-                        GameObject newBall3 = Instantiate(ball, new Vector3(0, transform.position.y, 0), transform.rotation);
+                        GameObject newBall3 = spawnBall();
 
                         newBall3.transform.localScale = ball.transform.localScale * 3;
 

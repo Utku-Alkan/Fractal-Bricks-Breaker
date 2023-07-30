@@ -5,13 +5,13 @@ using UnityEngine;
 public class BallScript : MonoBehaviour
 {
 
-    //private LogicScript logic;
+    private LogicScript logic;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        //logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
+        logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
     }
 
 
@@ -25,6 +25,7 @@ public class BallScript : MonoBehaviour
         {
 
             Destroy(collision.gameObject);
+            logic.PlayBallHitAudio();
         }
     }
 }

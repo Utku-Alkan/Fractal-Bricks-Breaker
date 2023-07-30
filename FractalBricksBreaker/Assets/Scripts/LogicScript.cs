@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class LogicScript : MonoBehaviour
 {
     [SerializeField] Text ballCount;
-    [SerializeField] Text degree;
     [SerializeField] Text fractalName;
     [SerializeField] Text levelCount;
     [SerializeField] Text highscore;
@@ -16,8 +15,35 @@ public class LogicScript : MonoBehaviour
     [SerializeField] GameObject panel;
     [SerializeField] Text coinCountText;
     [SerializeField] GameObject gameOverCloud;
-
+    [SerializeField] AudioSource BallHitAudio;
+    [SerializeField] AudioSource YouWinAudio;
+    [SerializeField] AudioSource YouLoseAudio;
+    [SerializeField] AudioSource NewHighscoreAudio;
+    [SerializeField] AudioSource UIButtonClickAudio;
     private bool isBallSpawnMoveAllowed = true;
+
+
+    public void PlayUIButtonClickAudio()
+    {
+        UIButtonClickAudio.Play();
+    }
+
+    public void PlayNewHighscoreAudio()
+    {
+        NewHighscoreAudio.Play();
+    }
+    public void PlayYouLoseAudio()
+    {
+        YouLoseAudio.Play();
+    }
+    public void PlayYouWinAudio()
+    {
+        YouWinAudio.Play();
+    }
+    public void PlayBallHitAudio()
+    {
+        BallHitAudio.Play();
+    }
 
     public void setBallSpawnMoveAllowed(bool isAllowed)
     {
@@ -49,16 +75,6 @@ public class LogicScript : MonoBehaviour
         return int.Parse(ballCount.text);
     }
 
-
-    public void setDegree(int a)
-    {
-        degree.text = "Degree: " + (a+1).ToString();
-    }
-
-    public void setDegreeString()
-    {
-        degree.text = "Special Level!";
-    }
 
     public void setFractalName(string name)
     {
