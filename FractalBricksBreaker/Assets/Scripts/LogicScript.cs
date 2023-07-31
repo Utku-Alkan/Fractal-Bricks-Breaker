@@ -15,6 +15,7 @@ public class LogicScript : MonoBehaviour
     [SerializeField] GameObject panel;
     [SerializeField] Text coinCountText;
     [SerializeField] GameObject gameOverCloud;
+    [SerializeField] AudioSource GameMusic;
     [SerializeField] AudioSource BallHitAudio;
     [SerializeField] AudioSource YouWinAudio;
     [SerializeField] AudioSource YouLoseAudio;
@@ -22,6 +23,76 @@ public class LogicScript : MonoBehaviour
     [SerializeField] AudioSource UIButtonClickAudio;
     private bool isBallSpawnMoveAllowed = true;
 
+    [SerializeField] Button MusicOnOffButton;
+    [SerializeField] Sprite MusicOff;
+    [SerializeField] Sprite MusicOn;
+
+    [SerializeField] Button SfxOnOffButton;
+    [SerializeField] Sprite SfxOff;
+    [SerializeField] Sprite SfxOn;
+
+    [SerializeField] GameObject PausePanel;
+    [SerializeField] GameObject PauseCloud;
+
+    [SerializeField] GameObject PauseButton;
+
+    public bool isPausePanelActive()
+    {
+        return PausePanel.activeInHierarchy;
+    }
+
+    public void PausePanelOn()
+    {
+        PauseCloud.SetActive(true);
+        LeanTween.scale(PausePanel, new Vector3(1f, 1f, 1f), 0.5f).setEase(LeanTweenType.easeOutSine).setOnComplete(()=>
+                Time.timeScale = 0);
+    }
+
+    public void PausePanelOff()
+    {
+        PauseCloud.SetActive(false);
+        PausePanel.transform.localScale = new Vector3(0f, 0f, 0f);
+        Time.timeScale = 1;
+    }
+
+    public void TurnOnOffMusic()
+    {
+        if (GameMusic.mute)
+        {
+            GameMusic.mute = false;
+            MusicOnOffButton.GetComponent<Image>().sprite = MusicOn;
+        }
+        else
+        {
+            GameMusic.mute = true;
+            MusicOnOffButton.GetComponent<Image>().sprite = MusicOff;
+        }
+    }
+
+    public void TurnOnOffSfx()
+    {
+        if (BallHitAudio.mute)
+        {
+            BallHitAudio.mute = false;
+            YouWinAudio.mute = false;
+            YouLoseAudio.mute = false;
+            NewHighscoreAudio.mute = false;
+            UIButtonClickAudio.mute = false;
+
+            SfxOnOffButton.GetComponent<Image>().sprite = SfxOn;
+        }
+        else
+        {
+
+            BallHitAudio.mute = true;
+            YouWinAudio.mute = true;
+            YouLoseAudio.mute = true;
+            NewHighscoreAudio.mute = true;
+            UIButtonClickAudio.mute = true;
+
+            SfxOnOffButton.GetComponent<Image>().sprite = SfxOff;
+        }
+    }
 
     public void PlayUIButtonClickAudio()
     {
@@ -95,7 +166,7 @@ public class LogicScript : MonoBehaviour
     public void goMainMenuScene()
     {
         SceneManager.LoadScene("MainMenu");
-
+        Time.timeScale = 1;
     }
 
 
@@ -135,13 +206,14 @@ public class LogicScript : MonoBehaviour
     {
         panel.SetActive(true);
         gameOverCloud.SetActive(true);
+        PauseButton.SetActive(false);
     }
 
     public void panelSetInactive()
     {
         panel.SetActive(false);
         gameOverCloud.SetActive(false);
-
+        PauseButton.SetActive(true);
     }
 
     public bool isPanelActive()

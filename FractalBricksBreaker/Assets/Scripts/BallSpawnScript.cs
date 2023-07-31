@@ -64,99 +64,99 @@ public class BallSpawnScript : MonoBehaviour
 
 
 
-            if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !logic.isPausePanelActive())
+        {
+            if (logic.returnBallCount() > 0)
             {
-                if (logic.returnBallCount() > 0)
-                {
-                    isDragging = true;
-                    initialPosition = Input.mousePosition;
-                }
+                isDragging = true;
+                initialPosition = Input.mousePosition;
             }
-            else if (Input.GetMouseButtonUp(0) && isDragging)
+        }
+        else if (Input.GetMouseButtonUp(0) && isDragging)
+        {
+            if (logic.returnBallCount() > 0)
             {
-                if (logic.returnBallCount() > 0)
+                Vector3 releasePosition = Input.mousePosition;
+                Vector3 direction = (initialPosition - releasePosition).normalized;
+                if (direction.y < 0.1)
                 {
-                    Vector3 releasePosition = Input.mousePosition;
-                    Vector3 direction = (initialPosition - releasePosition).normalized;
-                    if (direction.y < 0.1)
-                    {
-                        isDragging = false;
-                        return;
-
-                    }
-                    logic.setBallSpawnMoveAllowed(true); // allowing first ball to change ball spawner's place
-                    logic.decreaseBall();
-                    GameObject newBall = spawnBall();
-                    Rigidbody2D rb = newBall.GetComponent<Rigidbody2D>();
-
-
-                    Vector3 force = direction * ballSpeed;
-                    rb.AddForce(force);
                     isDragging = false;
+                    return;
+
+                }
+                logic.setBallSpawnMoveAllowed(true); // allowing first ball to change ball spawner's place
+                logic.decreaseBall();
+                GameObject newBall = spawnBall();
+                Rigidbody2D rb = newBall.GetComponent<Rigidbody2D>();
 
 
-                    // handling X2 Ball
-                    if (newBall.name == "X2Ball(Clone)" || newBall.name == "GravityBall(Clone)")
-                    {
-                        GameObject newBall2 = spawnBall();
-
-                        Rigidbody2D rb2 = newBall2.GetComponent<Rigidbody2D>();
-
-                        rb2.AddForce(force * 1.2f);
-                    }
-                    else if (newBall.name == "LaserBall(Clone)")
-                    {
-                        GameObject newBall2 = Instantiate(LaserBallLaser, new Vector3(0, transform.position.y, 0), transform.rotation);
-                        Rigidbody2D rb2 = newBall2.GetComponent<Rigidbody2D>();
-
-                        rb2.AddForce(force * 2f);
-
-                    }
-                    else if (newBall.name == "X3Ball(Clone)")
-                    {
-                        GameObject newBall2 = spawnBall();
-
-                        Rigidbody2D rb2 = newBall2.GetComponent<Rigidbody2D>();
-
-                        rb2.AddForce(force * 1.2f);
+                Vector3 force = direction * ballSpeed;
+                rb.AddForce(force);
+                isDragging = false;
 
 
-                        GameObject newBall3 = spawnBall();
+                // handling X2 Ball
+                if (newBall.name == "X2Ball(Clone)" || newBall.name == "GravityBall(Clone)")
+                {
+                    GameObject newBall2 = spawnBall();
 
-                        Rigidbody2D rb3 = newBall3.GetComponent<Rigidbody2D>();
+                    Rigidbody2D rb2 = newBall2.GetComponent<Rigidbody2D>();
 
-                        rb3.AddForce(force * 1.4f);
-                    }
-                    else if (newBall.name == "Trio(Clone)")
-                    {
-                        GameObject newBall2 = spawnBall();
+                    rb2.AddForce(force * 1.2f);
+                }
+                else if (newBall.name == "LaserBall(Clone)")
+                {
+                    GameObject newBall2 = Instantiate(LaserBallLaser, new Vector3(0, transform.position.y, 0), transform.rotation);
+                    Rigidbody2D rb2 = newBall2.GetComponent<Rigidbody2D>();
 
-                        newBall2.transform.localScale = ball.transform.localScale * 2;
+                    rb2.AddForce(force * 2f);
 
-                        Rigidbody2D rb2 = newBall2.GetComponent<Rigidbody2D>();
+                }
+                else if (newBall.name == "X3Ball(Clone)")
+                {
+                    GameObject newBall2 = spawnBall();
 
-                        rb2.AddForce(force);
+                    Rigidbody2D rb2 = newBall2.GetComponent<Rigidbody2D>();
+
+                    rb2.AddForce(force * 1.2f);
+
+
+                    GameObject newBall3 = spawnBall();
+
+                    Rigidbody2D rb3 = newBall3.GetComponent<Rigidbody2D>();
+
+                    rb3.AddForce(force * 1.4f);
+                }
+                else if (newBall.name == "Trio(Clone)")
+                {
+                    GameObject newBall2 = spawnBall();
+
+                    newBall2.transform.localScale = ball.transform.localScale * 2;
+
+                    Rigidbody2D rb2 = newBall2.GetComponent<Rigidbody2D>();
+
+                    rb2.AddForce(force);
 
 
 
-                        GameObject newBall3 = spawnBall();
+                    GameObject newBall3 = spawnBall();
 
-                        newBall3.transform.localScale = ball.transform.localScale * 3;
+                    newBall3.transform.localScale = ball.transform.localScale * 3;
 
-                        Rigidbody2D rb3 = newBall3.GetComponent<Rigidbody2D>();
+                    Rigidbody2D rb3 = newBall3.GetComponent<Rigidbody2D>();
 
-                        rb3.AddForce(force);
-                    }
-                    else if (newBall.name == "HackerBall(Clone)")
-                    {
-                        GameObject newBall2 = Instantiate(ball, new Vector3(0, transform.position.y + 8.5f, 0), transform.rotation);
+                    rb3.AddForce(force);
+                }
+                else if (newBall.name == "HackerBall(Clone)")
+                {
+                    GameObject newBall2 = Instantiate(ball, new Vector3(0, transform.position.y + 8.5f, 0), transform.rotation);
 
-                        Rigidbody2D rb2 = newBall2.GetComponent<Rigidbody2D>();
+                    Rigidbody2D rb2 = newBall2.GetComponent<Rigidbody2D>();
 
-                        rb2.AddForce(force);
-                    }
+                    rb2.AddForce(force);
                 }
             }
+        }
         
     }
 

@@ -11,6 +11,7 @@ public class TweenScript : MonoBehaviour
 
     void Start()
     {
+        treeRoot.transform.localScale = treeRoot.transform.localScale * 0.9f;
         fractalCanopy(treeRoot, 8);
     }
 

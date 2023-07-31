@@ -263,7 +263,6 @@ public class BreakableSpawnScript : MonoBehaviour
             }
 
 
-            logic.increaseBall(2);
 
 
             //ALL FRACTAL SPAWNS END
@@ -281,29 +280,7 @@ public class BreakableSpawnScript : MonoBehaviour
             }
 
         }
-        else if (levelCounter % 5 == 0)
-        {
-            FractalLevel1 = -1;
-            Debug.Log("Special level");
-
-            logic.setFractalName("COIN RUSH!");
-
-            SpecialLevelSpawn();
-            logic.increaseBall(1);
-
-
-            //destroy all balls after completing the fractal
-
-
-            GameObject[] ballss = GameObject.FindGameObjectsWithTag("Ball");
-
-            foreach (GameObject balll in ballss)
-            {
-                Destroy(balll);
-            }
-
-        }
-
+        
     }
 
     IEnumerator BreakablesFinished()
@@ -323,7 +300,6 @@ public class BreakableSpawnScript : MonoBehaviour
 
 
             randomizer = new System.Random().Next(0, 23);
-
             Debug.Log(randomizer);
 
             Instantiate(Coin, new Vector3(0, transform.position.y, 0), transform.rotation); //coin init
@@ -342,7 +318,7 @@ public class BreakableSpawnScript : MonoBehaviour
                 logic.setFractalName("Pythagoras tree with " + centerBreakables[randomizer - 18].name);
 
                 CenterBreakable = Instantiate(centerBreakables[randomizer - 18], new Vector3(0, transform.position.y, 0), Breakable1.transform.rotation);
-                CenterBreakable.transform.localScale = CenterBreakable.transform.localScale * 0.65f;
+                CenterBreakable.transform.localScale = CenterBreakable.transform.localScale * 0.62f;
 
                 PythagorasTree(CenterBreakable, FractalLevel1 + 2);
             }
@@ -351,7 +327,7 @@ public class BreakableSpawnScript : MonoBehaviour
                 logic.setFractalName("Pythagoras tree (original)");
 
                 CenterBreakable = Instantiate(Breakable1, new Vector3(0, transform.position.y, 0), Breakable1.transform.rotation);
-                CenterBreakable.transform.localScale = CenterBreakable.transform.localScale * 0.65f;
+                CenterBreakable.transform.localScale = CenterBreakable.transform.localScale * 0.61f;
 
                 PythagorasTree(CenterBreakable, FractalLevel1 + 2);
 
@@ -436,7 +412,7 @@ public class BreakableSpawnScript : MonoBehaviour
                     logic.setFractalName("Pythagoras tree (original)");
 
                     CenterBreakable = Instantiate(Breakable1, new Vector3(0, transform.position.y, 0), Breakable1.transform.rotation);
-                    CenterBreakable.transform.localScale = CenterBreakable.transform.localScale * 0.65f;
+                    CenterBreakable.transform.localScale = CenterBreakable.transform.localScale * 0.61f;
 
                     PythagorasTree(CenterBreakable, FractalLevel1 + 2);
                 }
@@ -479,7 +455,7 @@ public class BreakableSpawnScript : MonoBehaviour
             }
 
 
-            logic.increaseBall(2);
+            logic.increaseBall(1);
 
 
             //ALL FRACTAL SPAWNS END
@@ -875,17 +851,18 @@ public class BreakableSpawnScript : MonoBehaviour
             newCoin.transform.localScale = newCoin.transform.localScale / 3;
 
             GameObject newCollectable = Instantiate(Collectable, new Vector3(0, transform.position.y, 0), transform.rotation);
-            newCollectable.transform.localScale = newCollectable.transform.localScale * 8;
+            newCollectable.transform.localScale = newCollectable.transform.localScale * 24;
 
             spawnAround(newCollectable, 1);
+            newCollectable.transform.localScale = newCollectable.transform.localScale / 3;
 
 
 
             Instantiate(BreakableHeart, new Vector3(transform.position.x, transform.position.y + 3, 0), transform.rotation);
-            Instantiate(BreakableHeart, new Vector3(transform.position.x + 1, transform.position.y + 3, 0), transform.rotation);
-            Instantiate(BreakableHeart, new Vector3(transform.position.x - 1, transform.position.y + 3, 0), transform.rotation);
-            Instantiate(BreakableHeart, new Vector3(transform.position.x + 2, transform.position.y + 3, 0), transform.rotation);
-            Instantiate(BreakableHeart, new Vector3(transform.position.x - 2, transform.position.y + 3, 0), transform.rotation);
+            Instantiate(BreakableHeart, new Vector3(transform.position.x + 0.9f, transform.position.y + 3, 0), transform.rotation);
+            Instantiate(BreakableHeart, new Vector3(transform.position.x - 0.9f, transform.position.y + 3, 0), transform.rotation);
+            Instantiate(BreakableHeart, new Vector3(transform.position.x + 1.8f, transform.position.y + 3, 0), transform.rotation);
+            Instantiate(BreakableHeart, new Vector3(transform.position.x - 1.8f, transform.position.y + 3, 0), transform.rotation);
         }else if (randomNum == 1)
         {
             Instantiate(BreakableHeart, new Vector3(transform.position.x, transform.position.y + 3, 0), transform.rotation);
@@ -931,8 +908,9 @@ public class BreakableSpawnScript : MonoBehaviour
                 Instantiate(Coin, new Vector3(transform.position.x - 2 + i, transform.position.y, 0), transform.rotation);
             }
 
-            Instantiate(BreakableVerticalLine, new Vector3(transform.position.x - 2.2f, transform.position.y - 3, 0), Quaternion.Euler(0, 0, 15));
-            Instantiate(BreakableVerticalLine, new Vector3(transform.position.x + 2.2f, transform.position.y - 3, 0), Quaternion.Euler(0, 0, -15));
+            Instantiate(BreakableVerticalLine, new Vector3(transform.position.x, transform.position.y - 2, 0), Quaternion.Euler(0, 0, 90));
+            Instantiate(BreakableVerticalLine, new Vector3(transform.position.x, transform.position.y - 2, 0), Quaternion.Euler(0, 0, 0));
+
 
 
         }
