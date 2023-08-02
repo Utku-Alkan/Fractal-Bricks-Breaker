@@ -6823,6 +6823,7 @@ MonoBehaviour:
   star3: {fileID: 2049313686}
   blackScreen: {fileID: 61844975}
   congratsText: {fileID: 333588665}
+  pauseGameButton: {fileID: 1831327647}
 --- !u!4 &1081743812
 Transform:
   m_ObjectHideFlags: 0
@@ -7860,11 +7861,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5c823435609f8b4f819d91ecf4512b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Breakable1: {fileID: 6545474217113443845, guid: 90ba7e571e00b634297047a2f0d98543, type: 3}
-  Breakable2: {fileID: 6545474217113443845, guid: d88f4f9e4650684478c71a0f78d54047, type: 3}
-  Breakable3: {fileID: 5154414400346889128, guid: 50d8e86dc58a1bd4ea4a0f924c38729e, type: 3}
-  Breakable4: {fileID: 1000012490942172, guid: 12ed2799b098648e9bceac3e017e79d2, type: 3}
-  Breakable5: {fileID: 6545474217113443845, guid: b8f326a5862134849a2529d652e1a25f, type: 3}
+  BreakableSquare: {fileID: 6545474217113443845, guid: 90ba7e571e00b634297047a2f0d98543, type: 3}
+  BreakableCircle: {fileID: 6545474217113443845, guid: d88f4f9e4650684478c71a0f78d54047, type: 3}
+  BreakableHexagon: {fileID: 5154414400346889128, guid: 50d8e86dc58a1bd4ea4a0f924c38729e, type: 3}
+  BreakableTriangle: {fileID: 7251890901030834953, guid: c5afde8a65f33b34094cd805dc3b38ae, type: 3}
+  BreakableHorizontalLine: {fileID: 6545474217113443845, guid: b8f326a5862134849a2529d652e1a25f, type: 3}
   BreakableVerticalLine: {fileID: 8330216145183365384, guid: f631b4bd67132da4186ef0a2a1206b91, type: 3}
   BreakableHeart: {fileID: 168822, guid: 1f3c7458d29ae40e990c8a71bb393745, type: 3}
   Ring: {fileID: 2990279631174975443, guid: 7c55957c5b7327049b3de49542e18e10, type: 3}

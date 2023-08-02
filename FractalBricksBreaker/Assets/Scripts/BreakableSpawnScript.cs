@@ -6,11 +6,11 @@ public class BreakableSpawnScript : MonoBehaviour
 {
     private float TimeInterval = 0;
 
-    [SerializeField] GameObject Breakable1; // square
-    [SerializeField] GameObject Breakable2; // circle
-    [SerializeField] GameObject Breakable3; // hexagon
-    [SerializeField] GameObject Breakable4; // triangle   
-    [SerializeField] GameObject Breakable5; // line
+    [SerializeField] GameObject BreakableSquare; // square
+    [SerializeField] GameObject BreakableCircle; // circle
+    [SerializeField] GameObject BreakableHexagon; // hexagon
+    [SerializeField] GameObject BreakableTriangle; // triangle   
+    [SerializeField] GameObject BreakableHorizontalLine; // line
 
     [SerializeField] GameObject BreakableVerticalLine; // dik cizgi
     [SerializeField] GameObject BreakableHeart; // heart
@@ -46,14 +46,15 @@ public class BreakableSpawnScript : MonoBehaviour
         logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
         tweenScript = GameObject.FindGameObjectWithTag("GameTween").GetComponent<GameTweenScript>();
 
-        centerBreakables.Add(Breakable1);
-        centerBreakables.Add(Breakable2);
-        centerBreakables.Add(Breakable3);
-        centerBreakables.Add(Breakable4);
-        centerBreakables.Add(Breakable5);
+        centerBreakables.Add(BreakableSquare);
+        centerBreakables.Add(BreakableCircle);
+        centerBreakables.Add(BreakableHexagon);
+        centerBreakables.Add(BreakableTriangle);
+        centerBreakables.Add(BreakableHorizontalLine);
         logic.setCoin(PlayerPrefs.GetInt("CoinAmount"));
 
-        InitializeFirstLevel();
+        StartCoroutine(BreakablesFinished(0f));
+
     }
 
     void Update()
@@ -76,7 +77,7 @@ public class BreakableSpawnScript : MonoBehaviour
         {
             ParticleSystem ps = GameObject.Find("Particle").GetComponent<ParticleSystem>();
             ps.Play();
-            StartCoroutine(BreakablesFinished());
+            StartCoroutine(BreakablesFinished(2f));
             tweenScript.BlackScreenVisible();
             tweenScript.StarsAnimation();
             tweenScript.CongratsTextPopUp();
@@ -91,8 +92,9 @@ public class BreakableSpawnScript : MonoBehaviour
         }
     }
 
-    private void InitializeFirstLevel()
+    IEnumerator BreakablesFinished(float waitSecs)
     {
+        yield return new WaitForSeconds(waitSecs);
 
 
         DestroyCollectables();
@@ -106,8 +108,7 @@ public class BreakableSpawnScript : MonoBehaviour
             FractalLevel1++;
 
 
-            randomizer = new System.Random().Next(0, 23);
-
+            randomizer = new System.Random().Next(0, 24);
             Debug.Log(randomizer);
 
             Instantiate(Coin, new Vector3(0, transform.position.y, 0), transform.rotation); //coin init
@@ -115,209 +116,25 @@ public class BreakableSpawnScript : MonoBehaviour
 
             // ALL FRACTAL SPAWNS START
 
-            if (randomizer == 22)
+            if (randomizer == 23)
+            {
+                logic.setFractalName("H Tree");
+
+                CenterBreakable = Instantiate(BreakableVerticalLine, new Vector3(0, transform.position.y, 0), BreakableVerticalLine.transform.rotation);
+                CenterBreakable.transform.localScale = CenterBreakable.transform.localScale * 1.4f;
+                fractalCanopy(CenterBreakable, FractalLevel1 + 3, 90f, 0.707f);
+            }
+            else if (randomizer == 22)
             {
                 logic.setFractalName("Circular Infinity");
-                CenterBreakable = Instantiate(Ring, new Vector3(0, transform.position.y, 0), Breakable2.transform.rotation);
+                CenterBreakable = Instantiate(Ring, new Vector3(0, transform.position.y, 0), BreakableCircle.transform.rotation);
                 CircularInfinity(CenterBreakable, FractalLevel1 + 2);
             }
             else if (randomizer >= 19 && randomizer <= 21)
             {
                 logic.setFractalName("Pythagoras tree with " + centerBreakables[randomizer - 18].name);
 
-                CenterBreakable = Instantiate(centerBreakables[randomizer - 18], new Vector3(0, transform.position.y, 0), Breakable1.transform.rotation);
-                CenterBreakable.transform.localScale = CenterBreakable.transform.localScale * 0.65f;
-
-                PythagorasTree(CenterBreakable, FractalLevel1 + 2);
-            }
-            else if (randomizer == 18)
-            {
-                logic.setFractalName("Pythagoras tree (original)");
-
-                CenterBreakable = Instantiate(Breakable1, new Vector3(0, transform.position.y, 0), Breakable1.transform.rotation);
-                CenterBreakable.transform.localScale = CenterBreakable.transform.localScale * 0.65f;
-
-                PythagorasTree(CenterBreakable, FractalLevel1 + 2);
-
-            }
-            else if (randomizer == 14 || randomizer == 15 || randomizer == 16 || randomizer == 17)
-            {
-                if (randomizer == 14)
-                {
-                    logic.setFractalName("T-square (original)");
-                    CenterBreakable = Instantiate(Breakable1, new Vector3(0, transform.position.y, 0), Breakable1.transform.rotation);
-
-                }
-                else if (randomizer == 15)
-                {
-                    logic.setFractalName("T-square with Circle");
-                    CenterBreakable = Instantiate(Breakable2, new Vector3(0, transform.position.y, 0), Breakable2.transform.rotation);
-
-                }
-                else if (randomizer == 16)
-                {
-                    logic.setFractalName("T-square with Hexagon");
-                    CenterBreakable = Instantiate(Breakable3, new Vector3(0, transform.position.y, 0), Breakable3.transform.rotation);
-                }
-                else if (randomizer == 17)
-                {
-                    logic.setFractalName("T-square with Heart");
-                    CenterBreakable = Instantiate(BreakableHeart, new Vector3(0, transform.position.y, 0), BreakableHeart.transform.rotation);
-                    CenterBreakable.transform.localScale = CenterBreakable.transform.localScale * 1.5f;
-                }
-                CenterBreakable.transform.localScale = CenterBreakable.transform.localScale * 1.5f;
-                CenterBreakable.GetComponent<SpriteRenderer>().color = Color.yellow;
-                TSquare(CenterBreakable, FractalLevel1 + 1);
-            }
-            else if (randomizer == 13) // fractal canopy
-            {
-                logic.setFractalName("Fractal Canopy (Tree)");
-
-                CenterBreakable = Instantiate(BreakableVerticalLine, new Vector3(0, transform.position.y-1, 0), BreakableVerticalLine.transform.rotation);
-                fractalCanopy(CenterBreakable, FractalLevel1 + 3, 0);
-            }
-
-            else if (randomizer > 8 && randomizer <= 12)
-            {
-                randomizer = randomizer - 9;
-                if (randomizer == 1) // deleting circle since it looks disgusting
-                {
-                    randomizer = 0;
-                }
-                logic.setFractalName("Cantor Set with " + centerBreakables[randomizer].name);
-                temp = Instantiate(centerBreakables[randomizer]);
-                temp.transform.localScale = new Vector3(temp.transform.localScale.x * 2, temp.transform.localScale.y, temp.transform.localScale.z);
-                CenterBreakable = Instantiate(temp, new Vector3(0, transform.position.y, 0), temp.transform.rotation);
-
-                cantorSet(CenterBreakable, FractalLevel1 + 1);
-                Destroy(temp);
-
-            }
-            else if (randomizer == 8) // line
-            {
-                logic.setFractalName("Cantor Set (original)");
-                randomizer = 4;
-                temp = Instantiate(centerBreakables[randomizer]);
-                //temp.transform.localScale = temp.transform.localScale * 1.6f;
-                CenterBreakable = Instantiate(temp, new Vector3(0, transform.position.y, 0), temp.transform.rotation);
-
-                cantorSet(CenterBreakable, FractalLevel1 + 1);
-                Destroy(temp);
-            }
-            else if (randomizer > 4 && randomizer <= 7) // guzel fractallarin oranini artirdik
-            {
-
-                if (randomizer == 5)
-                {
-                    logic.setFractalName("T-square (original)");
-                    CenterBreakable = Instantiate(Breakable1, new Vector3(0, transform.position.y, 0), Breakable1.transform.rotation);
-                    CenterBreakable.transform.localScale = CenterBreakable.transform.localScale * 1.5f;
-                    CenterBreakable.GetComponent<SpriteRenderer>().color = Color.yellow;
-                    TSquare(CenterBreakable, FractalLevel1 + 1);
-                }
-                else if (randomizer == 6)
-                {
-                    logic.setFractalName("Pythagoras tree (original)");
-
-                    CenterBreakable = Instantiate(Breakable1, new Vector3(0, transform.position.y, 0), Breakable1.transform.rotation);
-                    CenterBreakable.transform.localScale = CenterBreakable.transform.localScale * 0.65f;
-
-                    PythagorasTree(CenterBreakable, FractalLevel1 + 2);
-                }
-                else if (randomizer == 7)
-                {
-                    logic.setFractalName("Fractal Canopy (Tree)");
-
-                    CenterBreakable = Instantiate(BreakableVerticalLine, new Vector3(0, transform.position.y-1, 0), BreakableVerticalLine.transform.rotation);
-                    CenterBreakable.GetComponent<SpriteRenderer>().color = Color.black;
-
-                    fractalCanopy(CenterBreakable, FractalLevel1 + 3, 0);
-                }
-            }
-            else if (randomizer == 4) //triangle
-            {
-                logic.setFractalName("Sierpinski Triangle (original)");
-                randomizer = 3;
-                temp = Instantiate(centerBreakables[randomizer]);
-                temp.transform.localScale = temp.transform.localScale * 1.6f;
-                CenterBreakable = Instantiate(temp, new Vector3(0, transform.position.y, 0), temp.transform.rotation);
-
-                spawnAroundTriangle(CenterBreakable, FractalLevel1 + 1, true);
-                Destroy(temp);
-
-            }
-            else if (randomizer >= 0 && randomizer <= 3)// 0 -> square, 1 -> circle, 2 -> hexagon, 3 -> triangle
-            {
-                if (randomizer == 0)
-                {
-                    logic.setFractalName("Sierpinski Carpet (original)");
-
-                }
-                else
-                {
-                    logic.setFractalName("Sierpinski Carpet with " + centerBreakables[randomizer].name);
-
-                }
-                CenterBreakable = Instantiate(centerBreakables[randomizer], new Vector3(0, transform.position.y, 0), centerBreakables[randomizer].transform.rotation);
-                spawnAround(CenterBreakable, FractalLevel1);
-            }
-
-
-
-
-            //ALL FRACTAL SPAWNS END
-
-
-
-            //destroy all balls after completing the fractal
-
-
-            GameObject[] balls = GameObject.FindGameObjectsWithTag("Ball");
-
-            foreach (GameObject ball in balls)
-            {
-                Destroy(ball);
-            }
-
-        }
-        
-    }
-
-    IEnumerator BreakablesFinished()
-    {
-        yield return new WaitForSeconds(2);
-
-
-        DestroyCollectables();
-
-        levelCounter++;
-        logic.setLevel(levelCounter);
-
-
-        if (FractalLevel1 < 3)
-        {
-            FractalLevel1++;
-
-
-            randomizer = new System.Random().Next(0, 23);
-            Debug.Log(randomizer);
-
-            Instantiate(Coin, new Vector3(0, transform.position.y, 0), transform.rotation); //coin init
-
-
-            // ALL FRACTAL SPAWNS START
-
-            if (randomizer == 22)
-            {
-                logic.setFractalName("Circular Infinity");
-                CenterBreakable = Instantiate(Ring, new Vector3(0, transform.position.y, 0), Breakable2.transform.rotation);
-                CircularInfinity(CenterBreakable, FractalLevel1 + 2);
-            }
-            else if (randomizer >= 19 && randomizer <= 21)
-            {
-                logic.setFractalName("Pythagoras tree with " + centerBreakables[randomizer - 18].name);
-
-                CenterBreakable = Instantiate(centerBreakables[randomizer - 18], new Vector3(0, transform.position.y, 0), Breakable1.transform.rotation);
+                CenterBreakable = Instantiate(centerBreakables[randomizer - 18], new Vector3(0, transform.position.y, 0), BreakableSquare.transform.rotation);
                 CenterBreakable.transform.localScale = CenterBreakable.transform.localScale * 0.62f;
 
                 PythagorasTree(CenterBreakable, FractalLevel1 + 2);
@@ -326,7 +143,7 @@ public class BreakableSpawnScript : MonoBehaviour
             {
                 logic.setFractalName("Pythagoras tree (original)");
 
-                CenterBreakable = Instantiate(Breakable1, new Vector3(0, transform.position.y, 0), Breakable1.transform.rotation);
+                CenterBreakable = Instantiate(BreakableSquare, new Vector3(0, transform.position.y, 0), BreakableSquare.transform.rotation);
                 CenterBreakable.transform.localScale = CenterBreakable.transform.localScale * 0.61f;
 
                 PythagorasTree(CenterBreakable, FractalLevel1 + 2);
@@ -337,19 +154,19 @@ public class BreakableSpawnScript : MonoBehaviour
                 if (randomizer == 14)
                 {
                     logic.setFractalName("T-square (original)");
-                    CenterBreakable = Instantiate(Breakable1, new Vector3(0, transform.position.y, 0), Breakable1.transform.rotation);
+                    CenterBreakable = Instantiate(BreakableSquare, new Vector3(0, transform.position.y, 0), BreakableSquare.transform.rotation);
 
                 }
                 else if (randomizer == 15)
                 {
                     logic.setFractalName("T-square with Circle");
-                    CenterBreakable = Instantiate(Breakable2, new Vector3(0, transform.position.y, 0), Breakable2.transform.rotation);
+                    CenterBreakable = Instantiate(BreakableCircle, new Vector3(0, transform.position.y, 0), BreakableCircle.transform.rotation);
 
                 }
                 else if (randomizer == 16)
                 {
                     logic.setFractalName("T-square with Hexagon");
-                    CenterBreakable = Instantiate(Breakable3, new Vector3(0, transform.position.y, 0), Breakable3.transform.rotation);
+                    CenterBreakable = Instantiate(BreakableHexagon, new Vector3(0, transform.position.y, 0), BreakableHexagon.transform.rotation);
                 }
                 else if (randomizer == 17)
                 {
@@ -366,7 +183,7 @@ public class BreakableSpawnScript : MonoBehaviour
                 logic.setFractalName("Fractal Canopy (Tree)");
 
                 CenterBreakable = Instantiate(BreakableVerticalLine, new Vector3(0, transform.position.y-1, 0), BreakableVerticalLine.transform.rotation);
-                fractalCanopy(CenterBreakable, FractalLevel1 + 3, 0);
+                fractalCanopy(CenterBreakable, FractalLevel1 + 3, 360.0f / 22.0f, 0.75f);
             }
 
             else if (randomizer > 8 && randomizer <= 12)
@@ -402,7 +219,7 @@ public class BreakableSpawnScript : MonoBehaviour
                 if (randomizer == 5)
                 {
                     logic.setFractalName("T-square (original)");
-                    CenterBreakable = Instantiate(Breakable1, new Vector3(0, transform.position.y, 0), Breakable1.transform.rotation);
+                    CenterBreakable = Instantiate(BreakableSquare, new Vector3(0, transform.position.y, 0), BreakableSquare.transform.rotation);
                     CenterBreakable.transform.localScale = CenterBreakable.transform.localScale * 1.5f;
                     CenterBreakable.GetComponent<SpriteRenderer>().color = Color.yellow;
                     TSquare(CenterBreakable, FractalLevel1 + 1);
@@ -411,7 +228,7 @@ public class BreakableSpawnScript : MonoBehaviour
                 {
                     logic.setFractalName("Pythagoras tree (original)");
 
-                    CenterBreakable = Instantiate(Breakable1, new Vector3(0, transform.position.y, 0), Breakable1.transform.rotation);
+                    CenterBreakable = Instantiate(BreakableSquare, new Vector3(0, transform.position.y, 0), BreakableSquare.transform.rotation);
                     CenterBreakable.transform.localScale = CenterBreakable.transform.localScale * 0.61f;
 
                     PythagorasTree(CenterBreakable, FractalLevel1 + 2);
@@ -423,7 +240,7 @@ public class BreakableSpawnScript : MonoBehaviour
                     CenterBreakable = Instantiate(BreakableVerticalLine, new Vector3(0, transform.position.y-1, 0), BreakableVerticalLine.transform.rotation);
                     CenterBreakable.GetComponent<SpriteRenderer>().color = Color.cyan;
 
-                    fractalCanopy(CenterBreakable, FractalLevel1 + 3, 0);
+                    fractalCanopy(CenterBreakable, FractalLevel1 + 3, 360.0f / 22.0f, 0.75f);
                 }
             }
             else if (randomizer == 4) //triangle
@@ -665,9 +482,9 @@ public class BreakableSpawnScript : MonoBehaviour
     }
 
 
-    void fractalCanopy(GameObject rootLine, int maxDepth, int parentInfo) // root = 0, left child = 1, right child = 2
+    void fractalCanopy(GameObject rootLine, int maxDepth, float rotationAngle, float lengthRatio) // root = 0, left child = 1, right child = 2
     {
-        float rotationAngle = 360.0f / 22.0f;
+        //float rotationAngle = 360.0f / 22.0f;
 
         if (maxDepth <= 0)
         {
@@ -682,8 +499,8 @@ public class BreakableSpawnScript : MonoBehaviour
         GameObject leftNode = Instantiate(rootLine, new Vector3(rootLine.transform.position.x, rootLine.transform.position.y, rootLine.transform.position.z), rootLine.transform.rotation);
         GameObject rightNode = Instantiate(rootLine, new Vector3(rootLine.transform.position.x, rootLine.transform.position.y, rootLine.transform.position.z), rootLine.transform.rotation);
 
-        leftNode.transform.localScale = rootLine.transform.localScale * 0.75f;
-        rightNode.transform.localScale = rootLine.transform.localScale * 0.75f;
+        leftNode.transform.localScale = rootLine.transform.localScale * lengthRatio;
+        rightNode.transform.localScale = rootLine.transform.localScale * lengthRatio;
 
 
 
@@ -719,8 +536,8 @@ public class BreakableSpawnScript : MonoBehaviour
 
 
 
-        fractalCanopy(leftNode, maxDepth - 1, 1);
-        fractalCanopy(rightNode, maxDepth - 1, 2);
+        fractalCanopy(leftNode, maxDepth - 1, rotationAngle, lengthRatio);
+        fractalCanopy(rightNode, maxDepth - 1, rotationAngle, lengthRatio);
     }
 
 

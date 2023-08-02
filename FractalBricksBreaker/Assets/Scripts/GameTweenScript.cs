@@ -11,9 +11,10 @@ public class GameTweenScript : MonoBehaviour
 
     [SerializeField] GameObject congratsText;
 
-
+    [SerializeField] GameObject pauseGameButton;
     public void StarsAnimation()
     {
+        pauseGameButton.SetActive(false);
         LeanTween.scale(star1, new Vector3(1f, 1f, 1f), 2f).setDelay(0.75f).setEase(LeanTweenType.easeOutElastic);
         LeanTween.scale(star2, new Vector3(1f, 1f, 1f), 2f).setDelay(0.50f).setEase(LeanTweenType.easeOutElastic);
         LeanTween.scale(star3, new Vector3(1f, 1f, 1f), 2f).setDelay(0.25f).setEase(LeanTweenType.easeOutElastic);
@@ -43,10 +44,10 @@ public class GameTweenScript : MonoBehaviour
 
     public void BlackScreenInvisible()
     {
+        pauseGameButton.transform.localScale = new Vector3(0, 0, 0);
+        LeanTween.alpha(blackScreen, 0, 0.5f).setDelay(2f).setOnComplete(() => pauseGameButton.SetActive(true));
 
-
-        LeanTween.alpha(blackScreen, 0, 0.5f).setDelay(2f);
+        
+        LeanTween.scale(pauseGameButton, new Vector3(1f, 1f, 1f), 1f).setEase(LeanTweenType.easeInOutCubic).setDelay(3f);
     }
-
-
 }
