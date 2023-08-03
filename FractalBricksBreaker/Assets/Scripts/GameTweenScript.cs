@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameTweenScript : MonoBehaviour
@@ -12,6 +13,37 @@ public class GameTweenScript : MonoBehaviour
     [SerializeField] GameObject congratsText;
 
     [SerializeField] GameObject pauseGameButton;
+
+    private TextMeshProUGUI textMeshPro;
+
+    private string[] congratsPhrases = {
+        "Great job!",
+        "Well done!",
+        "Excellent!",
+        "Outstanding!",
+        "Nailed it!",
+        "Bravo!",
+        "Fantastic!",
+        "Superb!",
+        "You're on fire!",
+        "Awesome!",
+        "You're a pro!",
+        "Amazing skills!",
+        "Good work!",
+        "Top-notch gaming!",
+        "Remarkable play!",
+        "Kudos to you!",
+        "Spectacular!",
+        "Unstoppable!",
+        "Nice Job!",
+        "Congratulations!",
+        "WOW!"
+    };
+
+    private void Start()
+    {
+        textMeshPro = congratsText.GetComponent<TextMeshProUGUI>();
+    }
     public void StarsAnimation()
     {
         pauseGameButton.SetActive(false);
@@ -27,6 +59,9 @@ public class GameTweenScript : MonoBehaviour
 
     public void CongratsTextPopUp()
     {
+        int randomIndex = Random.Range(0, congratsPhrases.Length);
+        textMeshPro.text = congratsPhrases[randomIndex];
+
         LeanTween.moveLocal(congratsText, new Vector3(0, -200f, 2f), .2f).setDelay(1f).setEase(LeanTweenType.easeInOutCubic);
 
         LeanTween.moveLocal(congratsText, new Vector3(0, -1000f, 2f), .2f).setDelay(2f).setEase(LeanTweenType.easeInOutCubic);

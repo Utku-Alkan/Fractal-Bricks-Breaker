@@ -36,6 +36,18 @@ public class LogicScript : MonoBehaviour
 
     [SerializeField] GameObject PauseButton;
 
+    void Start()
+    {
+        if(PlayerPrefs.HasKey("MusicOn") && PlayerPrefs.GetInt("MusicOn") == 0)
+        {
+            TurnOnOffMusic();
+        }
+        if(PlayerPrefs.HasKey("SfxOn") && PlayerPrefs.GetInt("SfxOn") == 0)
+        {
+            TurnOnOffSfx();
+        }
+    }
+
     public bool isPausePanelActive()
     {
         return PausePanel.activeInHierarchy;
@@ -61,11 +73,13 @@ public class LogicScript : MonoBehaviour
         {
             GameMusic.mute = false;
             MusicOnOffButton.GetComponent<Image>().sprite = MusicOn;
+            PlayerPrefs.SetInt("MusicOn", 1);
         }
         else
         {
             GameMusic.mute = true;
             MusicOnOffButton.GetComponent<Image>().sprite = MusicOff;
+            PlayerPrefs.SetInt("MusicOn", 0);
         }
     }
 
@@ -78,11 +92,13 @@ public class LogicScript : MonoBehaviour
             YouLoseAudio.mute = false;
             NewHighscoreAudio.mute = false;
             UIButtonClickAudio.mute = false;
+            PlayerPrefs.SetInt("SfxOn", 1);
 
             SfxOnOffButton.GetComponent<Image>().sprite = SfxOn;
         }
         else
         {
+            PlayerPrefs.SetInt("SfxOn", 0);
 
             BallHitAudio.mute = true;
             YouWinAudio.mute = true;

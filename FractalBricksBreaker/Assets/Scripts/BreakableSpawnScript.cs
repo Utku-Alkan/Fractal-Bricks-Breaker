@@ -108,15 +108,21 @@ public class BreakableSpawnScript : MonoBehaviour
             FractalLevel1++;
 
 
-            randomizer = new System.Random().Next(0, 24);
+            randomizer = new System.Random().Next(0, 25);
             Debug.Log(randomizer);
 
             Instantiate(Coin, new Vector3(0, transform.position.y, 0), transform.rotation); //coin init
 
 
             // ALL FRACTAL SPAWNS START
+            if(randomizer == 24)
+            {
+                logic.setFractalName("Wide Fractal Tree");
 
-            if (randomizer == 23)
+                CenterBreakable = Instantiate(BreakableVerticalLine, new Vector3(0, transform.position.y, 0), BreakableVerticalLine.transform.rotation);
+                fractalCanopy(CenterBreakable, FractalLevel1 + 3, 45f, 0.707f);
+            }
+            else if (randomizer == 23)
             {
                 logic.setFractalName("H Tree");
 

@@ -16,7 +16,7 @@ public class BallSpawnScript : MonoBehaviour
     private LineRenderer lineRenderer;
 
     public RectTransform buttonMainMenu;
-    public LogicScript logic;
+    private LogicScript logic;
 
     private bool isDragging = false;
     private Vector3 initialPosition;
@@ -26,7 +26,7 @@ public class BallSpawnScript : MonoBehaviour
     private float lineWidthEnd = 0.1f;
     public BallDatabase ballDB;
 
-
+    [SerializeField] GameObject character;
     void Start()
     {
         logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
@@ -40,7 +40,10 @@ public class BallSpawnScript : MonoBehaviour
         lineRenderer.endColor = lineColorEnd;
         lineRenderer.startWidth = lineWidthStart;
         lineRenderer.endWidth = lineWidthEnd;
-        
+
+        Color inverseColor = new Color(1f - ballDisplay.color.r, 1f - ballDisplay.color.g, 1f - ballDisplay.color.b);
+
+        character.GetComponent<SpriteRenderer>().color = inverseColor;
     }
 
 
@@ -106,7 +109,7 @@ public class BallSpawnScript : MonoBehaviour
                 }
                 else if (newBall.name == "LaserBall(Clone)")
                 {
-                    GameObject newBall2 = Instantiate(LaserBallLaser, new Vector3(0, transform.position.y, 0), transform.rotation);
+                    GameObject newBall2 = Instantiate(LaserBallLaser, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
                     Rigidbody2D rb2 = newBall2.GetComponent<Rigidbody2D>();
 
                     rb2.AddForce(force * 2f);
