@@ -56,7 +56,7 @@ public class LogicScript : MonoBehaviour
     public void PausePanelOn()
     {
         PauseCloud.SetActive(true);
-        LeanTween.scale(PausePanel, new Vector3(1f, 1f, 1f), 0.5f).setEase(LeanTweenType.easeOutSine).setOnComplete(()=>
+        LeanTween.scale(PausePanel, new Vector3(1f, 1f, 1f), 0.2f).setEase(LeanTweenType.easeOutSine).setOnComplete(()=>
                 Time.timeScale = 0);
     }
 
@@ -181,8 +181,8 @@ public class LogicScript : MonoBehaviour
 
     public void goMainMenuScene()
     {
-        SceneManager.LoadScene("MainMenu");
         Time.timeScale = 1;
+        SceneManager.LoadScene("MainMenu");
     }
 
 

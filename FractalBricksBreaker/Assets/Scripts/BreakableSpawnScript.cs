@@ -15,6 +15,7 @@ public class BreakableSpawnScript : MonoBehaviour
     [SerializeField] GameObject BreakableVerticalLine; // dik cizgi
     [SerializeField] GameObject BreakableHeart; // heart
     [SerializeField] GameObject Ring; // ring
+    [SerializeField] GameObject SquareEmpty; // square empty
 
 
     [SerializeField] GameObject Collectable; // x3 top
@@ -108,14 +109,21 @@ public class BreakableSpawnScript : MonoBehaviour
             FractalLevel1++;
 
 
-            randomizer = new System.Random().Next(0, 25);
+            randomizer = new System.Random().Next(0, 26);
             Debug.Log(randomizer);
 
             Instantiate(Coin, new Vector3(0, transform.position.y, 0), transform.rotation); //coin init
 
 
             // ALL FRACTAL SPAWNS START
-            if(randomizer == 24)
+            if(randomizer == 25)
+            {
+                logic.setFractalName("Nested Square Fractal");
+
+                CenterBreakable = Instantiate(SquareEmpty, new Vector3(transform.position.x, transform.position.y, transform.position.z), SquareEmpty.transform.rotation);
+                NestedSquareFractal(CenterBreakable, FractalLevel1);
+            }
+            else if(randomizer == 24)
             {
                 logic.setFractalName("Wide Fractal Tree");
 
@@ -661,6 +669,42 @@ public class BreakableSpawnScript : MonoBehaviour
         CircularInfinity(leftRing, maxDepth - 1);
         CircularInfinity(rightRing, maxDepth - 1);
     }
+
+    void NestedSquareFractal(GameObject center, int maxDepth)
+    {
+        if(maxDepth <= 0)
+        {
+            return;
+        }
+        float offset = ((center.transform.localScale.x) - ((center.transform.localScale.x * 0.4f)) * 5f);
+        GameObject leftTop = Instantiate(center);
+        GameObject rightTop = Instantiate(center);
+        GameObject leftBottom = Instantiate(center);
+        GameObject rightBottom = Instantiate(center);
+
+        leftTop.transform.localScale *= 0.4f;
+        rightTop.transform.localScale *= 0.4f;
+        leftBottom.transform.localScale *= 0.4f;
+        rightBottom.transform.localScale *= 0.4f;
+
+        leftTop.transform.position += new Vector3(-offset, offset, 0);
+        rightTop.transform.position += new Vector3(offset, offset, 0);
+        leftBottom.transform.position += new Vector3(-offset, -offset, 0);
+        rightBottom.transform.position += new Vector3(offset, -offset, 0);
+
+        NestedSquareFractal(leftTop, maxDepth - 1);
+        NestedSquareFractal(rightTop, maxDepth - 1);
+        NestedSquareFractal(leftBottom, maxDepth - 1);
+        NestedSquareFractal(rightBottom, maxDepth - 1);
+
+        if (maxDepth == 1)
+        {
+            Instantiate(Collectable, new Vector3(leftTop.transform.position.x, leftTop.transform.position.y, leftTop.transform.position.z), leftTop.transform.rotation);
+            // Instantiate(Collectable, new Vector3(rightTop.transform.position.x, rightTop.transform.position.y, rightTop.transform.position.z), rightTop.transform.rotation);
+            // Instantiate(Collectable, new Vector3(leftBottom.transform.position.x, leftBottom.transform.position.y, leftBottom.transform.position.z), leftBottom.transform.rotation);
+            Instantiate(Collectable, new Vector3(rightBottom.transform.position.x, rightBottom.transform.position.y, rightBottom.transform.position.z), rightBottom.transform.rotation);
+        }
+    }
     void SpecialLevelSpawn()
     {
         int randomNum = new System.Random().Next(0, 3);
@@ -731,11 +775,9 @@ public class BreakableSpawnScript : MonoBehaviour
                 Instantiate(Coin, new Vector3(transform.position.x - 2 + i, transform.position.y, 0), transform.rotation);
             }
 
-            Instantiate(BreakableVerticalLine, new Vector3(transform.position.x, transform.position.y - 2, 0), Quaternion.Euler(0, 0, 90));
-            Instantiate(BreakableVerticalLine, new Vector3(transform.position.x, transform.position.y - 2, 0), Quaternion.Euler(0, 0, 0));
-
-
-
+            GameObject turningLine = Instantiate(BreakableVerticalLine, new Vector3(transform.position.x, transform.position.y - 1, 0), Quaternion.Euler(0, 0, 0));
+            LeanTween.rotateAround(turningLine, Vector3.forward, -360, 3f).setLoopClamp();
+            //Instantiate(BreakableVerticalLine, new Vector3(transform.position.x, transform.position.y - 2, 0), Quaternion.Euler(0, 0, 0));
         }
 
 
