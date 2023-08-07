@@ -775,9 +775,13 @@ public class BreakableSpawnScript : MonoBehaviour
                 Instantiate(Coin, new Vector3(transform.position.x - 2 + i, transform.position.y, 0), transform.rotation);
             }
 
-            GameObject turningLine = Instantiate(BreakableVerticalLine, new Vector3(transform.position.x, transform.position.y - 1, 0), Quaternion.Euler(0, 0, 0));
-            LeanTween.rotateAround(turningLine, Vector3.forward, -360, 3f).setLoopClamp();
-            //Instantiate(BreakableVerticalLine, new Vector3(transform.position.x, transform.position.y - 2, 0), Quaternion.Euler(0, 0, 0));
+            GameObject turningLine = Instantiate(BreakableVerticalLine, new Vector3(transform.position.x, transform.position.y + 1, 0), Quaternion.Euler(0, 0, 0));
+            turningLine.transform.localScale *= 2;
+            LeanTween.rotateAround(turningLine, Vector3.forward, -360, 2f).setLoopClamp();
+            GameObject turningLine2 = Instantiate(BreakableVerticalLine, new Vector3(transform.position.x, transform.position.y + 1, 0), Quaternion.Euler(0, 0, 90));
+            turningLine2.transform.localScale *= 2;
+            LeanTween.rotateAround(turningLine2, Vector3.forward, 360, 2f).setLoopClamp();
+
         }
 
 
